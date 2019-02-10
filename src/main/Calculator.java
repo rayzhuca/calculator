@@ -11,7 +11,7 @@ package main;
  * @since 2019-02-9
  */
 
-public class Calculator {
+public class Calculator extends Settings {
 
     /**
      * @return an instance of Calculator
@@ -25,15 +25,10 @@ public class Calculator {
      * 
      * @param input String to be calculated
      * @return Calculated number
-     * @exception IllegalArgumentException if input is invalid
+     * @throws IllegalArgumentException if input is invalid
      */
     public double calculate(String input) throws IllegalArgumentException {
 
         return 0;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Math.pow(5, 0.5));
-        System.out.println(Operate.power(-5, 0.5));
     }
 }

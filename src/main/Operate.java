@@ -16,7 +16,7 @@ final class Operate {
      * 
      * @param addends... Numbers to be added
      * @return The sum of addends[]
-     * @exception IllegalArgumentException if sum is infinite
+     * @throws IllegalArgumentException if sum is infinite
      */
     protected static double add(double... addends) throws IllegalArgumentException {
         if (0 == addends.length|| null == addends) {
@@ -40,7 +40,7 @@ final class Operate {
      * 
      * @param subtrahend... Numbers to be subtracted
      * @return The difference of subtrahend[]
-     * @exception IllegalArgumentException if difference is infinite
+     * @throws IllegalArgumentException if difference is infinite
      */
     protected static double subtract(double... subtrahend) throws IllegalArgumentException {
         if (0 == subtrahend.length || null == subtrahend) {
@@ -64,7 +64,7 @@ final class Operate {
      * 
      * @param multiplier... Numbers to be multiplied
      * @return The product of multiplier[]
-     * @exception ArithmeticException if product is infinite
+     * @throws ArithmeticException if product is infinite
      */
     protected static double multiply(double... multiplier) throws IllegalArgumentException {
         if (0 == multiplier.length || null == multiplier) {
@@ -88,8 +88,8 @@ final class Operate {
      * 
      * @param divisor... Numbers to be divided
      * @return The quotient of divisor[]
-     * @exception ArithmeticException if dividend is divided by 0
-     * @exception IllegalArgumentException if quotient is infinite
+     * @throws ArithmeticException if dividend is divided by 0
+     * @throws IllegalArgumentException if quotient is infinite
      */
     protected static double divide(double... divisor) throws IllegalArgumentException, ArithmeticException {
         if (divisor.length == 0 || divisor == null) {
@@ -122,7 +122,7 @@ final class Operate {
      * @param base The base of the power
      * @param exponents... Numbers to be exponentiated
      * @return The power of exponents[]
-     * @exception ArithmeticException if the power is infinite
+     * @throws ArithmeticException if the power is infinite
      */
     protected static double power(double base, double... exponents) throws IllegalArgumentException {
         if (exponents.length == 0 || exponents == null) {
@@ -152,7 +152,7 @@ final class Operate {
      * 
      * @param factorial The factorial to be calculated
      * @return The product of a factorial
-     * @exception ArithmeticException if product is infinite
+     * @throws ArithmeticException if product is infinite
      */
     protected static double factorial(double factorial) throws IllegalArgumentException {
         if (factorial == 0) {

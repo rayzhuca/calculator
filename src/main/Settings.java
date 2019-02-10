@@ -10,5 +10,9 @@ package main;
  */
 
 public class Settings {
+
+    protected Settings() {
+
+    }
     
 }
