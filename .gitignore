@@ -1,3 +1,2 @@
-/src/main/Settings
-.class
-.jar
+*.class
+*.jar
