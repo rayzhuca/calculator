@@ -6,7 +6,7 @@ package main;
  * avaiable, and others.
  *
  * @author Ray Zhu
- * @version 1.0
+ * @version In development
  * @since 2019-02-9
  */
 
@@ -32,5 +32,4 @@ public class Calculator {
             throw(e);
         }
     }
-
 }
