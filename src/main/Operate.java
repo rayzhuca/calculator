@@ -19,7 +19,7 @@ final class Operate {
      * @exception IllegalArgumentException if sum is infinite
      */
     protected static double add(double... addends) throws IllegalArgumentException {
-        if (addends.length == 0 || addends == null) {
+        if (0 == addends.length|| null == addends) {
             return 0;
         }
 
@@ -43,7 +43,7 @@ final class Operate {
      * @exception IllegalArgumentException if difference is infinite
      */
     protected static double subtract(double... subtrahend) throws IllegalArgumentException {
-        if (subtrahend.length == 0 || subtrahend == null) {
+        if (0 == subtrahend.length || null == subtrahend) {
             return 0;
         }
 
@@ -67,7 +67,7 @@ final class Operate {
      * @exception ArithmeticException if product is infinite
      */
     protected static double multiply(double... multiplier) throws IllegalArgumentException {
-        if (multiplier.length == 0 || multiplier == null) {
+        if (0 == multiplier.length || null == multiplier) {
             return 0;
         }
 
@@ -129,18 +129,45 @@ final class Operate {
             return base;
         }
 
-        double power = base;
+        double sign = (0 > base) ? -1: 1;
+        double power = Math.abs(base);
 
         for (double exponent : exponents) {
-            if (exponent == 0) {
+            if (0 == exponent) {
                 return 1;
+            } else if (0 > exponent) {
+                sign = sign * -1;
             }
-            power = Math.pow(power, exponent);
+            power = Math.pow(power, Math.abs(exponent));
         }
 
         if (Double.isInfinite(power)) {
             throw new IllegalArgumentException("Power is infinite");
         }
-        return power;
+        return Math.copySign(power, sign);
+    }
+
+    /**
+     * Calculates the factorial
+     * 
+     * @param factorial The factorial to be calculated
+     * @return The product of a factorial
+     * @exception ArithmeticException if product is infinite
+     */
+    protected static double factorial(double factorial) throws IllegalArgumentException {
+        if (factorial == 0) {
+            return 1;
+        }
+
+        double product = 1;
+
+        for (int i = 1; i <= Math.abs(factorial); i++) {
+            product *= i;
+        }
+
+        if (Double.isInfinite(product)) {
+            throw new IllegalArgumentException("Product is infinite");
+        }
+        return Math.copySign(product, factorial);
     }
 }
