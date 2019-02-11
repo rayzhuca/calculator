@@ -1,15 +1,14 @@
 package main;
 
 /**
- * <h1>Operations used in Calculator</h1>
+ * <h1>Operation contains methods for calculations</h1>
  * <p>
  * <b>Note:</b> This class is only intended to be used by Calculator
  *
  * @author Ray Zhu
  * @since 2019-02-9
  */
-
-final class Operate {
+final class Operation {
 
     /**
      * Adds doubles together

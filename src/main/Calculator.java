@@ -7,13 +7,14 @@ package main;
  * customize specific operations avaiable, and others.
  *
  * @author Ray Zhu
- * @version In development
+ * @version 1
  * @since 2019-02-9
  */
-
-public class Calculator extends Settings {
+public class Calculator extends Manager {
 
     /**
+     * Makes a Calculator instance with default settings
+     * 
      * @return an instance of Calculator
      */
     public Calculator() {
@@ -28,7 +29,6 @@ public class Calculator extends Settings {
      * @throws IllegalArgumentException if input is invalid
      */
     public double calculate(String input) throws IllegalArgumentException {
-
         return 0;
     }
 }
