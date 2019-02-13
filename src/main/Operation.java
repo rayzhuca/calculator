@@ -147,6 +147,35 @@ final class Operation {
     }
 
     /**
+     * Square roots a single number
+     * 
+     * @param radicand The radicand of a square root, must be positive
+     * @param indicies... The indicies of a square root
+     * @return The square root of the radicand to the indicies
+     * @throws ArithmeticException if the square root is infinite
+     * @throws IllegalArgumentException if a radicand is negative
+     */
+    protected static double square(double radicand, double... indicies) throws IllegalArgumentException, IllegalArgumentException {
+        if (indicies.length == 0 || indicies == null) {
+            indicies = new double[] {2};
+        }
+        if (radicand < 0) {
+            throw new IllegalArgumentException("Negative radicand"); 
+        }
+
+        double square = radicand;
+
+        for (double index : indicies) {
+            square = power(square, 1 / index);
+        }
+
+        if (Double.isInfinite(square)) {
+            throw new IllegalArgumentException("Square root is infinite");
+        }
+        return square;
+    }
+
+    /**
      * Calculates the factorial
      * 
      * @param factorial The factorial to be calculated
