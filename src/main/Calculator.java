@@ -41,8 +41,4 @@ public class Calculator extends Manager {
     public double calculate(String input) throws IllegalArgumentException {
         return 0;
     }
-
-    public static void main(String[] args) {
-        System.out.println(Separator.combineSigns("-2+++----1-+12-"));
-    }
 }
