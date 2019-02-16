@@ -9,13 +9,53 @@ package main;
  * @since 2019-02-9
  */
 public class Manager {
-
+    private Operation.Operations[] allowedOperations = Operation.Operations.values();
+    
     /**
      * Makes a Calculator instance with default settings
-     * 
      */
-    protected Manager() {
+    public Manager() {
 
     }
     
+    /**
+     * Makes a Calculator instance with an array of allowed Operations
+     */
+    public Manager(Operation.Operations[] operations) {
+        allowedOperations = operations;
+    }
+
+    /**
+     * Returns the allowed operations
+     * 
+     * @return The allowed operation
+     */
+    public Operation.Operations[] getAllowedOperations() {
+        return allowedOperations;
+    }
+    
+    /**
+     * Sets the operations that is allowed 
+     * 
+     * @param operations The operations allowed
+     */
+    public void setOperations(Operation.Operations[] operations) {
+        allowedOperations = operations;
+    }
+
+    /**
+     * Check if operation is allowed
+     * 
+     * @param operation the operation to be checked
+     * @return if operation is allowed
+     */
+    public boolean checkOperationValidity(Operation.Operations operation) {
+        for (Operation.Operations v : allowedOperations) {
+            if (v == operation) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

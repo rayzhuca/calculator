@@ -198,4 +198,11 @@ final class Operation {
         }
         return Math.copySign(product, factorial);
     }
+
+    /**
+     * An enum of possible operations
+     */
+    public enum Operations {
+        ADD, SUBTRACT, MULTIPLY, DIVIDE, EXPONENT, SQAURE, FACTORIAL;     
+    }
 }

@@ -11,6 +11,16 @@ package main;
  * @since 2019-02-9
  */
 public class Calculator extends Manager {
+    private Manager manager;
+
+    /**
+     * Makes a Calculator instance with a pre-made Manager instance
+     * 
+     * @param manager The manager to be used
+     */
+    public Calculator(Manager manager) {
+        this.manager = manager;
+    }
 
     /**
      * Makes a Calculator instance with default settings
@@ -30,5 +40,9 @@ public class Calculator extends Manager {
      */
     public double calculate(String input) throws IllegalArgumentException {
         return 0;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Separator.combineSigns("-2+++----1-+12-"));
     }
 }
