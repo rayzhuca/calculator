@@ -1,12 +1,14 @@
 package main;
 
+import java.util.ArrayList;
+
 /**
  * <h1>Main controller of calculation methods</h1>
  * <p>
  * Calculator class converts a string to a double, and can be instantiated to
  * customize specific operations avaiable, and others.
  *
- * @author Ray Zhu
+ * @author Ray
  * @version 1
  * @since 2019-02-9
  */
@@ -39,6 +41,14 @@ public class Calculator extends Manager {
      * @throws IllegalArgumentException if input is invalid
      */
     public double calculate(String input) throws IllegalArgumentException {
+        input = Separator.removeWhiteSpace(input);
+        input = Separator.combineSigns(input);
+        ArrayList<String> list = Separator.separateParts(input);
+        try {
+            list = Separator.checkList(list);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
         return 0;
     }
 }

@@ -5,7 +5,7 @@ package main;
  * <p>
  * <b>Note:</b> This class is only intended to be used by Calculator
  *
- * @author Ray Zhu
+ * @author Ray
  * @since 2019-02-9
  */
 final class Operation {
@@ -203,6 +203,57 @@ final class Operation {
      * An enum of possible operations
      */
     public enum Operations {
-        ADD, SUBTRACT, MULTIPLY, DIVIDE, EXPONENT, SQAURE, FACTORIAL;     
+        ADD("+"), SUBTRACT("-"), MULTIPLY("*"), DIVIDE("/"), EXPONENT("^"), SQAURE("sqrt"), FACTORIAL("!");
+
+        private String operator;
+
+        /**
+         * Constructor for the Operations enum
+         * 
+         * @param operator the operator symbol used in a string
+         */
+        Operations(String operator) {
+            this.operator = operator;
+        }
+
+        /**
+         * Gets the operator of the enum
+         * 
+         * @return the operator of the enum
+         */
+        public String getOperator() {
+            return operator;
+        }
+
+        /**
+         * Checks if string is an operator
+         * 
+         * @param string to be checked
+         * @return if string is an operator
+         */
+        public static boolean isOperator(String string) {
+            for (Operations operation : Operations.values()) {
+                if (operation.getOperator().equals(string)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Checks if character is an operator
+         * 
+         * @param character to be checked
+         * @return if character is an operator
+         */
+        public boolean isOperator(char character) {
+            for (Operations operation : Operations.values()) {
+                if (operation.toString().equals(Character.toString(character))) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }

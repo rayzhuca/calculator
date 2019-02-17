@@ -5,7 +5,7 @@ package main;
  * <p>
  * <b>Note:</b> This class is only intended to be used by Calculator
  *
- * @author Ray Zhu
+ * @author Ray
  * @since 2019-02-9
  */
 public class Manager {
@@ -44,7 +44,7 @@ public class Manager {
     }
 
     /**
-     * Check if operation is allowed
+     * Checks if operation is allowed
      * 
      * @param operation the operation to be checked
      * @return if operation is allowed
@@ -52,6 +52,38 @@ public class Manager {
     public boolean checkOperationValidity(Operation.Operations operation) {
         for (Operation.Operations v : allowedOperations) {
             if (v == operation) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if character is an operator
+     * 
+     * @param character the operator to be checked
+     * @return if character is a operator
+     */
+    public boolean isOperatior(char character) {
+        for (Operation.Operations v : allowedOperations) {
+            if (v.getOperator().charAt(0) == character) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if string is an operator
+     * 
+     * @param string the operator to be checked
+     * @return if string is a operator
+     */
+    public boolean isOperatior(String string) {
+        for (Operation.Operations v : allowedOperations) {
+            if (v.getOperator() == string) {
                 return true;
             }
         }
