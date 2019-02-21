@@ -1,5 +1,7 @@
 package main;
 
+import java.util.List;
+
 /**
  * <h1>Manager manages settings for Calculator</h1>
  * <p>
@@ -9,7 +11,7 @@ package main;
  * @since 2019-02-9
  */
 public class Manager {
-    private Operation.Operations[] allowedOperations = Operation.Operations.values();
+    private Operation.Operators[] allowedOperations = Operation.Operators.values();
     
     /**
      * Makes a Calculator instance with default settings
@@ -20,8 +22,10 @@ public class Manager {
     
     /**
      * Makes a Calculator instance with an array of allowed Operations
+     * 
+     * @param operations[] The allowed operations to be used by the calculator
      */
-    public Manager(Operation.Operations[] operations) {
+    public Manager(Operation.Operators[] operations) {
         allowedOperations = operations;
     }
 
@@ -30,7 +34,7 @@ public class Manager {
      * 
      * @return The allowed operation
      */
-    public Operation.Operations[] getAllowedOperations() {
+    public Operation.Operators[] getAllowedOperations() {
         return allowedOperations;
     }
     
@@ -39,7 +43,7 @@ public class Manager {
      * 
      * @param operations The operations allowed
      */
-    public void setOperations(Operation.Operations[] operations) {
+    public void setOperations(Operation.Operators[] operations) {
         allowedOperations = operations;
     }
 
@@ -49,8 +53,8 @@ public class Manager {
      * @param operation the operation to be checked
      * @return if operation is allowed
      */
-    public boolean checkOperationValidity(Operation.Operations operation) {
-        for (Operation.Operations v : allowedOperations) {
+    public boolean checkOperationValidity(Operation.Operators operation) {
+        for (Operation.Operators v : allowedOperations) {
             if (v == operation) {
                 return true;
             }
@@ -66,7 +70,7 @@ public class Manager {
      * @return if character is a operator
      */
     public boolean isOperatior(char character) {
-        for (Operation.Operations v : allowedOperations) {
+        for (Operation.Operators v : allowedOperations) {
             if (v.getOperator().charAt(0) == character) {
                 return true;
             }
@@ -82,7 +86,7 @@ public class Manager {
      * @return if string is a operator
      */
     public boolean isOperatior(String string) {
-        for (Operation.Operations v : allowedOperations) {
+        for (Operation.Operators v : allowedOperations) {
             if (v.getOperator() == string) {
                 return true;
             }

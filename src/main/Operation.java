@@ -202,18 +202,21 @@ final class Operation {
     /**
      * An enum of possible operations
      */
-    public enum Operations {
-        ADD("+"), SUBTRACT("-"), MULTIPLY("*"), DIVIDE("/"), EXPONENT("^"), SQAURE("sqrt"), FACTORIAL("!");
+    public enum Operators {
+        ADD("+", true), SUBTRACT("-", true), MULTIPLY("*", true), DIVIDE("/", true), EXPONENT("^", true), SQAURE("sqrt", true), FACTORIAL("!", false);
 
         private String operator;
+        private boolean isPrefix;
 
         /**
          * Constructor for the Operations enum
          * 
          * @param operator the operator symbol used in a string
+         * @param isPrefix if the operator is calculated based on a prefix
          */
-        Operations(String operator) {
+        Operators(String operator, boolean isPrefix) {
             this.operator = operator;
+            this.isPrefix = isPrefix;
         }
 
         /**
@@ -232,8 +235,8 @@ final class Operation {
          * @return if string is an operator
          */
         public static boolean isOperator(String string) {
-            for (Operations operation : Operations.values()) {
-                if (operation.getOperator().equals(string)) {
+            for (Operators operation : Operators.values()) {
+                if (operation.getOperator().equals(string.toUpperCase())) {
                     return true;
                 }
             }
@@ -247,12 +250,37 @@ final class Operation {
          * @return if character is an operator
          */
         public boolean isOperator(char character) {
-            for (Operations operation : Operations.values()) {
-                if (operation.toString().equals(Character.toString(character))) {
+            for (Operators operation : Operators.values()) {
+                if (operation.toString().equals(Character.toString(character).toUpperCase())) {
                     return true;
                 }
             }
             return false;
+        }
+
+        /**
+         * Gets if the operator is a prefix
+         * 
+         * @return if the operator is a prefix
+         */
+        public boolean getPrefix() {
+            return isPrefix;
+        }
+
+        /**
+         * Checks if operator in form of a string is a prefix
+         * 
+         * @param string of the operator
+         * @return if operator is a prefix
+         */
+        public static boolean isPrefix(String string) {
+            Operators operator;
+            try {
+                operator = Operators.valueOf(string);
+            } catch(IllegalArgumentException e) {
+                return false;
+            }
+            return operator.getPrefix();
         }
 
     }

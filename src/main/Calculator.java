@@ -30,7 +30,7 @@ public class Calculator extends Manager {
      * @return an instance of Calculator
      */
     public Calculator() {
-
+        this(new Manager());
     }
 
     /**
@@ -41,14 +41,58 @@ public class Calculator extends Manager {
      * @throws IllegalArgumentException if input is invalid
      */
     public double calculate(String input) throws IllegalArgumentException {
-        input = Separator.removeWhiteSpace(input);
-        input = Separator.combineSigns(input);
+        ArrayList<String> list = assembleList(input);
+        double solution = calculate(list);
+        return solution;
+    }
+
+    /**
+     * Calculates a string into an mathematically organized list to be calculated
+     * 
+     * @param input String to be calculated
+     * @return mathematically organized list
+     * @throws IllegalArgumentException if input is invalid
+     */
+    public ArrayList<String> assembleList(String input) throws IllegalArgumentException {
+        input = Separator.combineSigns(Separator.removeWhiteSpace(input));
         ArrayList<String> list = Separator.separateParts(input);
+        System.out.println(list.toString());
         try {
             list = Separator.checkList(list);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-        return 0;
+        
+        return list;
+    }
+
+    /**
+     * Calculates a list to double
+     * 
+     * @param list String to be calculated
+     * @return calculated number
+     */
+    public double calculate(ArrayList<String> list) throws IllegalArgumentException {
+        double solution = 0;
+        // double lastNumber = 0;
+        // String operation = "";
+        // for (String s : list) {
+        //     if (Separator.isNumeric(s)) {
+        //         if (operation.isEmpty()) {
+        //             lastNumber = Double.parseDouble(s);
+        //             continue;
+        //         }
+        //         if (Operation.Operations.isPrefix(operation)) {
+        //             lastNumber = lastNumber + Double.parseDouble(s);
+        //         }
+        //     } else {
+        //         operation = s;
+        //         if (!Operation.Operations.isPrefix(s)) {
+
+        //         }
+        //     }
+        // }
+
+        return solution;
     }
 }

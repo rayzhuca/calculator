@@ -50,7 +50,7 @@ final class Separator {
      * @param character to be checked
      * @return if character is numeric
      */
-    private static boolean isNumeric(char character) {
+    public static boolean isNumeric(char character) {
         try {
             Double.parseDouble(String.valueOf(character));
         } catch (NumberFormatException e) {
@@ -65,7 +65,7 @@ final class Separator {
      * @param string to be checked
      * @return if string is numeric
      */
-    private static boolean isNumeric(String string) {
+    public static boolean isNumeric(String string) {
         try {
             Double.parseDouble(string);
         } catch (NumberFormatException e) {
@@ -146,6 +146,8 @@ final class Separator {
 
                 if (isSign(character)) {
                     list.add(Character.toString(character));
+                } else if (character == '(' || character == ')') {
+                    list.add(Character.toString(character));
                 } else {
                     queuedString = queuedString + character;
                 }
@@ -160,18 +162,46 @@ final class Separator {
     }
 
     /**
-     * Combines non-numeric parts of the list into operations
+     * Checks if a list is valid to be calculated
      * 
      * @param list of the original list
      * @return the new list with grouped operations
      */
     public static ArrayList<String> checkList(ArrayList<String> list) throws IllegalArgumentException {
+        int openParenthesis = 0; 
+        int closeParenthesis = 0; 
+        boolean wasOperator = false;
         for (int i = 0; list.size() > i; i++) {
             String string = list.get(i);
             if (!isNumeric(string) && !isSign(string.charAt(0))) {
-                if (!Operation.Operations.isOperator(string)) {
+                if (!Operation.Operators.isOperator(string) && !(string.equals("(") || string.equals(")"))) {
                     throw new IllegalArgumentException("Unknown operator");
                 }
+            }
+
+            if (Operation.Operators.isOperator(string)) {
+                Operation.Operators operator = Operation.Operators.valueOf(string.toUpperCase());
+                if (operator.getPrefix()) {
+                    wasOperator = true;
+                } else {
+                    wasOperator = false;
+                }
+            } else {
+                wasOperator = true;
+            }
+        }
+
+        if (openParenthesis > closeParenthesis) {
+            if (openParenthesis - closeParenthesis == 1) {
+                throw new IllegalArgumentException("Unexpected open parenthesis");
+            } else {
+                throw new IllegalArgumentException("Unexpected open parentheses");
+            }
+        } else if (closeParenthesis > openParenthesis) {
+            if (closeParenthesis - openParenthesis == 1) {
+                throw new IllegalArgumentException("Unexpected close parenthesis");
+            } else {
+                throw new IllegalArgumentException("Unexpected close parentheses");
             }
         }
 
@@ -179,12 +209,28 @@ final class Separator {
     }
     
     /**
-     * Organizes the list mathematically, accounting for GEMDAS
+     * Makes an array of indecies to be calculated mathematically, accounting for GEMDAS
      * 
      * @param list of the list to be sorted
-     * @return the organized list
+     * @return an array of indecies
      */
-    public static ArrayList<String> organizeMathematically(ArrayList<String> list) {
-        return list;
+    public static synchronized int[] organizeMathematically(ArrayList<String> list) {
+        int[] indicies = new int[list.size()];
+        int nested = 0;
+
+        //loop and get the highest nests
+        //add the indicies of that highest nest
+        //get the second highest nests
+        //etc  
+
+        for (String string : list) {
+            if (string == "(") {
+                nested += 1;
+            } else if (string == ")") {
+                nested -= 1;
+            }
+        }
+
+        return indicies;
     }
 }
