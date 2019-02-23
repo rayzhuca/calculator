@@ -1,8 +1,12 @@
 package main;
 
 import java.util.ArrayList;
-import main.BinaryTree.Node;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
+import main.Operation;
+import main.Operation.Operators;
 import java.lang.String;
 
 /**
@@ -154,6 +158,11 @@ final class Separator {
                 } else {
                     queuedString = queuedString + character;
                 }
+
+                if (Operators.getEnumFromOperator(queuedString) != null) {
+                    list.add(queuedString);
+                    queuedString = "";
+                }
             }
         }
         if (!queuedNumber.isEmpty()) {
@@ -173,24 +182,35 @@ final class Separator {
     public static ArrayList<String> checkList(ArrayList<String> list) throws IllegalArgumentException {
         int openParenthesis = 0;
         int closeParenthesis = 0;
-        boolean wasOperator = false;
+        boolean wasOperatorPrefix = false;
+        boolean wasOperatorSuffix = false;
         for (int i = 0; list.size() > i; i++) {
             String string = list.get(i);
             if (!isNumeric(string) && !isSign(string.charAt(0))) {
-                if (!Operation.Operators.isOperator(string) && !(string.equals("(") || string.equals(")"))) {
+                if (!Operators.isOperator(string) && !(string.equals("(") || string.equals(")"))) {
                     throw new IllegalArgumentException("Unknown operator");
                 }
             }
 
-            if (Operation.Operators.isOperator(string)) {
-                Operation.Operators operator = Operation.Operators.valueOf(string.toUpperCase());
+            if (Operators.isOperator(string)) {
+                Operators operator = Operators.getEnumFromOperator(string);
+                if (wasOperatorPrefix && operator.getPrefix()) {
+                    throw new IllegalArgumentException("Doubled prefix operators");
+                }
+                if (wasOperatorSuffix && !operator.getPrefix()) {
+                    throw new IllegalArgumentException("Doubled suffix operators");
+                }
+
                 if (operator.getPrefix()) {
-                    wasOperator = true;
+                    wasOperatorPrefix = true;
+                    wasOperatorSuffix = false;
                 } else {
-                    wasOperator = false;
+                    wasOperatorPrefix = false;
+                    wasOperatorSuffix = true;
                 }
             } else {
-                wasOperator = true;
+                wasOperatorSuffix = false;
+                wasOperatorPrefix = false;
             }
         }
 
@@ -212,86 +232,58 @@ final class Separator {
     }
 
     /**
-     * Makes a expression tree from a list ordered mathematically (GEMDAS)
+     * Parses a mathematical expression from infix form into postfix form
      * 
-     * @param list of the list to be sorted
-     * @return a binary tree
+     * @param input the input to be rearraged
+     * @return the postfix form of the input
      */
-    public static synchronized BinaryTree organizeMathematically(ArrayList<String> list) {
-        BinaryTree tree = new BinaryTree();
-        String lowestPrecedenceString = "";
-        int lowestPrecedenceIndex = 0;
-        String[] array = list.toArray(new String[0]);
+    public static Queue<String> shuntingYard(String[] input) {
+        Queue<String> queue = new LinkedList<String>();
+        Stack<Operators> stack = new Stack<Operators>();
 
-        for (int i = 0; i < array.length; i++) {
-            String string = array[i];
-            if (checkPrecedence(lowestPrecedenceString, string)) {
-                lowestPrecedenceString = string;
-                lowestPrecedenceIndex = i;
+        for (int i = 0; i < input.length; i++) {
+            String token = input[i];
+            if (isNumeric(token)) {
+                queue.add(token);
+            } else if (Operators.isOperator(token)) {
+                Operators tokenEnum = Operators.getEnumFromOperator(token);
+                if (!stack.isEmpty()) {
+                    while (stack.lastElement().getPrecedence() > tokenEnum.getPrecedence()
+                            || (stack.lastElement().getPrecedence() == tokenEnum.getPrecedence()
+                                    && stack.lastElement().getPrefix())
+                                    && !stack.lastElement().getOperator().equals("(_")) {
+                        queue.add(stack.pop().getOperator());
+                    }
+                }
+                stack.push(tokenEnum);
+            } else if (token.equals("(")) {
+                Operators tokenEnum = Operators.getEnumFromOperator(token);
+                stack.push(tokenEnum);
+            } else if (token.equals(")")) {
+                while (!stack.lastElement().equals(Operators.OPEN_PARENTHESIS)) {
+                    queue.add(stack.pop().getOperator());
+                }
+                while (stack.lastElement().equals(Operators.OPEN_PARENTHESIS)) {
+                    stack.pop();
+                }
             }
         }
 
-        String[][] arrays;
-
-        String[] part1 = new String[lowestPrecedenceIndex];
-        String[] part2 = new String[array.length - lowestPrecedenceIndex];
-
-        System.arraycopy(array, 0, part1, 0, part1.length);
-        System.arraycopy(array, part1.length, part2, 0, part2.length);
-
-        organizeMathematically(0, tree, new String[][] {part1, part2});
-
-        return tree;
-    }
-
-    /**
-     * A recursive function that is used by organizeMathematically, it splits a list
-     * into two, until it reaches the end, which then will be added to the binary
-     * tree
-     * 
-     * @param key       the key the node is on
-     * @param tree      the tree it is adding on
-     * @param array[][] the arrays of arrays that is splited
-     */
-    private static String[][] organizeMathematically(int key, BinaryTree tree, String[][] array) {
-        return null;
-    }
-
-    /**
-     * Returns true if string have a higher precedence than check
-     * 
-     * @param string the string to be checked against
-     * @param check  the string to be checked
-     * @return if string have a higher precedence than check
-     */
-    private static boolean checkPrecedence(String string, String check) {
-        return getPrecedence(string) > getPrecedence(check);
-    }
-
-    /**
-     * Gets an int for precedence of the operator
-     * 
-     * @param string the string to be checked
-     * @return the precednce
-     */
-    private static int getPrecedence(String string) {
-        switch (string) {
-        case "+":
-        case "-":
-            return 1;
-        case "*":
-        case "/":
-            return 2;
-        case "^":
-        case "sqrt":
-            return 3;
-        case "!":
-            return 4;
-        case "(":
-        case ")":
-            return 5;
-        default:
-            return -1;
+        while (!stack.isEmpty()) {
+            queue.add(stack.pop().getOperator());
         }
+
+        return queue;
     }
+
+    /**
+     * Calculates a queue that is a mathematical expression in postfix form into a double
+     * 
+     * @param queue the queue to be calculated
+     * @return the number returned
+     */
+    public static double calculatePostfix(Queue<String> queue) {
+
+        return 0;
+    } 
 }

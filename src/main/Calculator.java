@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 /**
  * <h1>Main controller of calculation methods</h1>
@@ -41,9 +42,9 @@ public class Calculator extends Manager {
      * @throws IllegalArgumentException if input is invalid
      */
     public double calculate(String input) throws IllegalArgumentException {
-        ArrayList<String> list = assembleList(input);
-        double solution = calculate(list);
-        return solution;
+        String[] array = assembleArray(input);
+        
+        return calculate(array);
     }
 
     /**
@@ -53,7 +54,7 @@ public class Calculator extends Manager {
      * @return mathematically organized list
      * @throws IllegalArgumentException if input is invalid
      */
-    public ArrayList<String> assembleList(String input) throws IllegalArgumentException {
+    public String[] assembleArray(String input) throws IllegalArgumentException {
         input = Separator.combineSigns(Separator.removeWhiteSpace(input));
         ArrayList<String> list = Separator.separateParts(input);
         System.out.println(list.toString());
@@ -63,36 +64,24 @@ public class Calculator extends Manager {
             throw new IllegalArgumentException(e.getMessage());
         }
         
-        return list;
+        return list.toArray(new String[0]);
     }
 
     /**
-     * Calculates a list to double
+     * Calculates an array to a double
      * 
      * @param list String to be calculated
      * @return calculated number
      */
-    public double calculate(ArrayList<String> list) throws IllegalArgumentException {
+    public double calculate(String[] list) throws IllegalArgumentException {
         double solution = 0;
-        // double lastNumber = 0;
-        // String operation = "";
-        // for (String s : list) {
-        //     if (Separator.isNumeric(s)) {
-        //         if (operation.isEmpty()) {
-        //             lastNumber = Double.parseDouble(s);
-        //             continue;
-        //         }
-        //         if (Operation.Operations.isPrefix(operation)) {
-        //             lastNumber = lastNumber + Double.parseDouble(s);
-        //         }
-        //     } else {
-        //         operation = s;
-        //         if (!Operation.Operations.isPrefix(s)) {
 
-        //         }
-        //     }
-        // }
+        Queue<String> queue = Separator.shuntingYard(list);
 
+        for (String ele : queue) {
+            System.out.print(ele + ", ");
+        }
+        
         return solution;
     }
 }

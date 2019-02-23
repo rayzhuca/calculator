@@ -203,10 +203,12 @@ final class Operation {
      * An enum of possible operations
      */
     public enum Operators {
-        ADD("+", true), SUBTRACT("-", true), MULTIPLY("*", true), DIVIDE("/", true), EXPONENT("^", true), SQAURE("sqrt", true), FACTORIAL("!", false);
+        ADD("+", true, 1), SUBTRACT("-", true, 1), MULTIPLY("*", true, 2), DIVIDE("/", true, 2), EXPONENT("^", true, 3), SQAURE("sqrt", true, 3), FACTORIAL("!", false, 4),
+        OPEN_PARENTHESIS("(_", false, 0), CLOSE_PARENTHESIS("(_", false, 0); //The parentheses are special cases
 
         private String operator;
         private boolean isPrefix;
+        private int precedence;
 
         /**
          * Constructor for the Operations enum
@@ -214,9 +216,17 @@ final class Operation {
          * @param operator the operator symbol used in a string
          * @param isPrefix if the operator is calculated based on a prefix
          */
-        Operators(String operator, boolean isPrefix) {
+        Operators(String operator, boolean isPrefix, int precedence) {
             this.operator = operator;
             this.isPrefix = isPrefix;
+            this.precedence = precedence;
+        }
+
+        /**
+         * Checks if the operator is a parenthesis
+         */
+        public boolean isParenthesis(Operators operator) {
+            return operator.operator == "(_" || operator.operator == ")_";
         }
 
         /**
@@ -236,7 +246,10 @@ final class Operation {
          */
         public static boolean isOperator(String string) {
             for (Operators operation : Operators.values()) {
-                if (operation.getOperator().equals(string.toUpperCase())) {
+                if (operation.getOperator().toLowerCase().equals(string.toLowerCase())) {
+                    if (operation.operator == "(_" || operation.operator == ")_") {
+                        continue;
+                    }
                     return true;
                 }
             }
@@ -251,11 +264,26 @@ final class Operation {
          */
         public boolean isOperator(char character) {
             for (Operators operation : Operators.values()) {
-                if (operation.toString().equals(Character.toString(character).toUpperCase())) {
+                if (operation.toString().toLowerCase().equals(Character.toString(character).toLowerCase())) {
+                    if (operation.operator == "(_" || operation.operator == ")_") {
+                        continue;
+                    }
                     return true;
                 }
             }
             return false;
+        }
+
+        /**
+         * Finds the enum based on the operator
+         */
+        public static Operators getEnumFromOperator(String operator) throws IllegalArgumentException {
+            for (Operators operation : Operators.values()) {
+                if (operation.operator.toLowerCase().equals(operator.toLowerCase())) {
+                    return operation;
+                }
+            }
+            return null;
         }
 
         /**
@@ -282,6 +310,14 @@ final class Operation {
             }
             return operator.getPrefix();
         }
-
+        
+        /**
+         * Gets the predence of the operator
+         * 
+         * @return the precedence of the operator
+         */
+        public int getPrecedence() {
+            return precedence;
+        }
     }
 }
