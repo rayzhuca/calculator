@@ -7,13 +7,16 @@ package main;
  *
  * @author Ray
  * @since 2019-02-10
+ * @deprecated
  */
 public class BinaryTree {
 
     /**
      * Functional interface for the find method
+     * @deprecated
      */
     @FunctionalInterface
+    
     static interface ValueManipulator {
         /**
          * Called when run is ran
@@ -31,6 +34,7 @@ public class BinaryTree {
      * 
      * @param key the position of the node
      * @param name the name of the node
+     * @deprecated
      */
     protected void add(int key, String name) {
 
@@ -65,6 +69,7 @@ public class BinaryTree {
      * 
      * @param key node key
      * @return the node
+     * @deprecated
      */
     protected Node find(int key) {
         Node target = root;
@@ -83,6 +88,7 @@ public class BinaryTree {
      * Searches through the binary tree in in reverse traversal starting from the root
      * 
      * @param valueManipulator The lambda for manipluating the node values
+     * @deprecated
      */
     protected void run(ValueManipulator valueManipulator) {
         if (root == null) {
@@ -99,6 +105,7 @@ public class BinaryTree {
      * @param node the node to be searched
      * @param valueManipulator the lambda for manipluating the node values
      * @param level the level of the node it is on
+     * @deprecated
      */
     private void run(Node node, ValueManipulator valueManipulator, int level) {
         if (node == null) {
@@ -115,6 +122,7 @@ public class BinaryTree {
      * Computes the height of a node
      * 
      * @param node the node to be calculated
+     * @deprecated
      */
     private int height(Node node) {
         if (node == null) {
@@ -133,6 +141,7 @@ public class BinaryTree {
 
     /**
      * The Node represented for the binary tree
+     * @deprecated
      */
     protected class Node {
         private int key;
@@ -144,6 +153,7 @@ public class BinaryTree {
          * 
          * @param key the position of the node
          * @param name the name of the node
+         * @deprecated
          */
         protected Node(int key, String name) {
             this.key = key;
@@ -154,6 +164,7 @@ public class BinaryTree {
          * Gets the key of the node
          * 
          * @return the key of the node
+         * @deprecated
          */
         protected int getKey() {
             return key;
@@ -163,6 +174,7 @@ public class BinaryTree {
          * Gets the name of the node
          * 
          * @return the name of the node
+         * @deprecated
          */
         protected String getName() {
             return name;
@@ -172,6 +184,7 @@ public class BinaryTree {
          * Gets the left child of the node
          * 
          * @return the left child of the node
+         * @deprecated
          */
         protected Node getLeftChild() {
             return leftChild;
@@ -181,6 +194,7 @@ public class BinaryTree {
          * Gets the right child of the node
          * 
          * @return the right child of the node
+         * @deprecated
          */
         protected Node getRightChild() {
             return rightChild;
@@ -190,6 +204,7 @@ public class BinaryTree {
          * Sets the left child of the node
          * 
          * @param child the left child of the node to be set
+         * @deprecated
          */
         protected void setLeftChild(Node child) {
             leftChild = child;
@@ -199,6 +214,7 @@ public class BinaryTree {
          * Sets the right child of the node
          * 
          * @param child the right child of the node to be set
+         * @deprecated
          */
         protected void setRightChild(Node child) {
             rightChild = child;
