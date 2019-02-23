@@ -12,6 +12,7 @@ Output:
 
 ## Bugs
 There are plenty of bugs and problems with this library, for example operations that is unary may not currently work.
+Please post bugs into Issues page for me to fix.
 
 ## Upcoming updates
 - Control what type operations can be used for each calculator instance
