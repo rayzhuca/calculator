@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Queue;
+import java.util.Scanner;
 
 /**
  * <h1>Main controller of calculation methods</h1>
@@ -57,7 +58,6 @@ public class Calculator extends Manager {
     public String[] assembleArray(String input) throws IllegalArgumentException {
         input = Separator.combineSigns(Separator.removeWhiteSpace(input));
         ArrayList<String> list = Separator.separateParts(input);
-        System.out.println(list.toString());
         try {
             list = Separator.checkList(list);
         } catch (IllegalArgumentException e) {
@@ -76,12 +76,8 @@ public class Calculator extends Manager {
     public double calculate(String[] list) throws IllegalArgumentException {
         double solution = 0;
 
-        Queue<String> queue = Separator.shuntingYard(list);
-
-        for (String ele : queue) {
-            System.out.print(ele + ", ");
-        }
+        ArrayList<String> queue = Separator.shuntingYard(list);
         
-        return solution;
+        return Separator.calculatePostfix(queue);
     }
 }

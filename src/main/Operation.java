@@ -200,10 +200,35 @@ final class Operation {
     }
 
     /**
+     * Calculates a double from two numbers accordingly
+     * 
+     * @param operator the operation to be used
+     * @param num1 the first number
+     * @param num2 the second number
+     * @return the result
+     */
+    public static double operate(Operators operator, double num1, double num2) throws IllegalArgumentException {
+		if (operator == Operators.ADD) {
+            return add(num1, num2);
+        } else if (operator == Operators.SUBTRACT) {
+            return subtract(num1, num2);
+        } else if (operator == Operators.MULTIPLY) {
+            return multiply(num1, num2);
+        } else if (operator == Operators.DIVIDE) {
+            return divide(num1, num2);
+        } else if (operator == Operators.EXPONENT) {
+            return power(num1, num2);
+        } else if (operator == Operators.SQAURE) {
+            return square(num1, num2);
+        }
+        throw new IllegalArgumentException("Illegal operator");
+	}
+
+    /**
      * An enum of possible operations
      */
     public enum Operators {
-        ADD("+", true, 1), SUBTRACT("-", true, 1), MULTIPLY("*", true, 2), DIVIDE("/", true, 2), EXPONENT("^", true, 3), SQAURE("sqrt", true, 3), FACTORIAL("!", false, 4),
+        ADD("+", true, 1), SUBTRACT("-", true, 1), MULTIPLY("*", true, 2), DIVIDE("/", true, 2), EXPONENT("^", true, 3), SQAURE("sqrt", true, 3), //FACTORIAL("!", false, 4),
         OPEN_PARENTHESIS("(_", false, 0), CLOSE_PARENTHESIS("(_", false, 0); //The parentheses are special cases
 
         private String operator;

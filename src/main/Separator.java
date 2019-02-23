@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 import java.util.Stack;
 
 import main.Operation;
@@ -233,12 +234,13 @@ final class Separator {
 
     /**
      * Parses a mathematical expression from infix form into postfix form
+     * using the shunting-yard algorithm
      * 
      * @param input the input to be rearraged
      * @return the postfix form of the input
      */
-    public static Queue<String> shuntingYard(String[] input) {
-        Queue<String> queue = new LinkedList<String>();
+    public static ArrayList<String> shuntingYard(String[] input) {
+        ArrayList<String> queue = new ArrayList<String>();
         Stack<Operators> stack = new Stack<Operators>();
 
         for (int i = 0; i < input.length; i++) {
@@ -253,6 +255,9 @@ final class Separator {
                                     && stack.lastElement().getPrefix())
                                     && !stack.lastElement().getOperator().equals("(_")) {
                         queue.add(stack.pop().getOperator());
+                        if (stack.isEmpty()) {
+                            break;
+                        }
                     }
                 }
                 stack.push(tokenEnum);
@@ -282,8 +287,26 @@ final class Separator {
      * @param queue the queue to be calculated
      * @return the number returned
      */
-    public static double calculatePostfix(Queue<String> queue) {
+    public static double calculatePostfix(ArrayList<String> queue) {
+        ArrayList<Double> stack = new ArrayList<Double>();
+        String[] array = queue.toArray(new String[0]);
+        int i = 0;
+        
+        for (String ele : array) {
+            if (isNumeric(ele)) {
+                stack.add(Double.parseDouble(ele));
+            } else if (Operators.isOperator(ele)) {
+                double num2 = stack.get(stack.size() - 1);
+                stack.remove(stack.size() - 1);
+                double num1 = stack.get(stack.size() - 1);
+                stack.remove(stack.size() - 1);
 
-        return 0;
-    } 
+                Operators operator = Operators.getEnumFromOperator(ele);
+
+                stack.add(Operation.operate(operator, num1, num2));
+            }
+        }
+
+		return stack.toArray(new Double[0])[0];
+    }
 }
