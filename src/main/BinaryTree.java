@@ -10,6 +10,20 @@ package main;
  */
 public class BinaryTree {
 
+    /**
+     * Functional interface for the find method
+     */
+    @FunctionalInterface
+    static interface ValueManipulator {
+        /**
+         * Called when run is ran
+         * 
+         * @param leftChild the left child of the node
+         * @param rightChild the right child of the node
+         */
+        void manipulate(Node node);
+    }
+
     Node root;
 
     /**
@@ -66,27 +80,55 @@ public class BinaryTree {
     }
 
     /**
-     * Searches through the binary tree in in order traversal starting from the root
+     * Searches through the binary tree in in reverse traversal starting from the root
+     * 
+     * @param valueManipulator The lambda for manipluating the node values
      */
-    protected void run() {
+    protected void run(ValueManipulator valueManipulator) {
         if (root == null) {
             return;
         }
-        run(root.leftChild);
-        run(root.rightChild);
+        for (int height = height(root); 1 < height; height--) {
+            run(root, valueManipulator, height);
+        }
     }
 
     /**
-     * Searches through the binary tree in in order traversal
+     * Searches through the binary tree in in reverse traversal
      * 
-     * @param node The node to be searched
+     * @param node the node to be searched
+     * @param valueManipulator the lambda for manipluating the node values
+     * @param level the level of the node it is on
      */
-    protected void run(Node node) {
-        if (root == null) {
+    private void run(Node node, ValueManipulator valueManipulator, int level) {
+        if (node == null) {
             return;
+        } else if (level == 1) {
+            valueManipulator.manipulate(node);
+        } else if (level > 1) {
+            run(node.leftChild, valueManipulator, level - 1);
+            run(node.rightChild, valueManipulator, level - 1);
         }
-        run(root.leftChild);
-        run(root.rightChild);
+    }
+
+    /**
+     * Computes the height of a node
+     * 
+     * @param node the node to be calculated
+     */
+    private int height(Node node) {
+        if (node == null) {
+            return 0;
+        } else {
+            int leftHeight = height(node.leftChild);
+            int rightHeight = height(node.rightChild);
+
+            if (rightHeight < leftHeight) {
+                return leftHeight + 1;
+            } else {
+                return rightHeight + 1;
+            }
+        }
     }
 
     /**

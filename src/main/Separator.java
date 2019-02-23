@@ -1,6 +1,8 @@
 package main;
 
 import java.util.ArrayList;
+import main.BinaryTree.Node;
+
 import java.lang.String;
 
 /**
@@ -101,7 +103,8 @@ final class Separator {
             }
         }
 
-        String[] manipulatedArray = list.toArray(new String[list.size()]);;
+        String[] manipulatedArray = list.toArray(new String[list.size()]);
+        ;
         String manipulated = "";
         for (String str : manipulatedArray) {
             manipulated = manipulated + str;
@@ -168,8 +171,8 @@ final class Separator {
      * @return the new list with grouped operations
      */
     public static ArrayList<String> checkList(ArrayList<String> list) throws IllegalArgumentException {
-        int openParenthesis = 0; 
-        int closeParenthesis = 0; 
+        int openParenthesis = 0;
+        int closeParenthesis = 0;
         boolean wasOperator = false;
         for (int i = 0; list.size() > i; i++) {
             String string = list.get(i);
@@ -207,30 +210,88 @@ final class Separator {
 
         return list;
     }
-    
+
     /**
-     * Makes an array of indecies to be calculated mathematically, accounting for GEMDAS
+     * Makes a expression tree from a list ordered mathematically (GEMDAS)
      * 
      * @param list of the list to be sorted
-     * @return an array of indecies
+     * @return a binary tree
      */
-    public static synchronized int[] organizeMathematically(ArrayList<String> list) {
-        int[] indicies = new int[list.size()];
-        int nested = 0;
+    public static synchronized BinaryTree organizeMathematically(ArrayList<String> list) {
+        BinaryTree tree = new BinaryTree();
+        String lowestPrecedenceString = "";
+        int lowestPrecedenceIndex = 0;
+        String[] array = list.toArray(new String[0]);
 
-        //loop and get the highest nests
-        //add the indicies of that highest nest
-        //get the second highest nests
-        //etc  
-
-        for (String string : list) {
-            if (string == "(") {
-                nested += 1;
-            } else if (string == ")") {
-                nested -= 1;
+        for (int i = 0; i < array.length; i++) {
+            String string = array[i];
+            if (checkPrecedence(lowestPrecedenceString, string)) {
+                lowestPrecedenceString = string;
+                lowestPrecedenceIndex = i;
             }
         }
 
-        return indicies;
+        String[][] arrays;
+
+        String[] part1 = new String[lowestPrecedenceIndex];
+        String[] part2 = new String[array.length - lowestPrecedenceIndex];
+
+        System.arraycopy(array, 0, part1, 0, part1.length);
+        System.arraycopy(array, part1.length, part2, 0, part2.length);
+
+        organizeMathematically(0, tree, new String[][] {part1, part2});
+
+        return tree;
+    }
+
+    /**
+     * A recursive function that is used by organizeMathematically, it splits a list
+     * into two, until it reaches the end, which then will be added to the binary
+     * tree
+     * 
+     * @param key       the key the node is on
+     * @param tree      the tree it is adding on
+     * @param array[][] the arrays of arrays that is splited
+     */
+    private static String[][] organizeMathematically(int key, BinaryTree tree, String[][] array) {
+        return null;
+    }
+
+    /**
+     * Returns true if string have a higher precedence than check
+     * 
+     * @param string the string to be checked against
+     * @param check  the string to be checked
+     * @return if string have a higher precedence than check
+     */
+    private static boolean checkPrecedence(String string, String check) {
+        return getPrecedence(string) > getPrecedence(check);
+    }
+
+    /**
+     * Gets an int for precedence of the operator
+     * 
+     * @param string the string to be checked
+     * @return the precednce
+     */
+    private static int getPrecedence(String string) {
+        switch (string) {
+        case "+":
+        case "-":
+            return 1;
+        case "*":
+        case "/":
+            return 2;
+        case "^":
+        case "sqrt":
+            return 3;
+        case "!":
+            return 4;
+        case "(":
+        case ")":
+            return 5;
+        default:
+            return -1;
+        }
     }
 }
