@@ -1,5 +1,5 @@
 # Calculator
-Calculator is a library for calculating a string into a double in Java.
+Calculator is a library for calculating a string into a double mathematically in Java.
 
 ## How to use
 ### Calculate a number
