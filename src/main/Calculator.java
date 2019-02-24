@@ -81,8 +81,4 @@ public class Calculator extends Manager {
         
         return Separator.calculatePostfix(queue);
     }
-
-    public static void main(String[] args) {
-        System.out.println(new Calculator().calculate("2+0.5"));
-    }
 }
