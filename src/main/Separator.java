@@ -193,7 +193,7 @@ final class Separator {
      */
     protected static boolean checkList(ArrayList<String> list) throws IllegalArgumentException {
         try {
-            return checkList(list.toArray(new String[0]));
+            return checkArray(list.toArray(new String[0]));
         } catch (IllegalArgumentException e) {
             throw e;
         }
@@ -205,7 +205,7 @@ final class Separator {
      * @param list of the original list
      * @return if list is valid
      */
-    protected static boolean checkList(String[] array) throws IllegalArgumentException {
+    protected static boolean checkArray(String[] array) throws IllegalArgumentException {
         int openParenthesis = 0;
         int closeParenthesis = 0;
         boolean wasOperatorPrefix = false;

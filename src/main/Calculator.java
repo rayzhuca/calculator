@@ -71,17 +71,47 @@ public class Calculator extends Manager {
     /**
      * Calculates an array to a double
      * 
-     * @param list String to be calculated
+     * @param array[] Strings to be calculated
      * @return calculated number
      * @throws Exception if list is invalid
      */
-    public double calculate(String[] list) throws Exception {
+    public double calculate(String[] array) throws Exception {
         try {
-            ArrayList<String> queue = Separator.shuntingYard(list);
-            Separator.checkList(list);
+            ArrayList<String> queue = Separator.shuntingYard(array);
+            Separator.checkArray(array);
             return Separator.calculatePostfix(queue);
         } catch (Exception e) {
             throw e;
+        }
+    }
+
+    /**
+     * Checks if an array is valid for calculating
+     * 
+     * @param array[] the array to be calculated
+     * @return if array is invalid
+     */
+    public boolean checkValidity(String[] array) {
+        try {
+            Separator.checkArray(array);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a list is valid for calculating
+     * 
+     * @param list[] the list to be calculated
+     * @return if list is invalid
+     */
+    public boolean checkValidity(ArrayList<String> list) {
+        try {
+            Separator.checkList(list);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
