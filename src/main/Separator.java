@@ -124,7 +124,7 @@ final class Separator {
      * @param string The string to be separated
      * @return A string list of number and others in order
      */
-    public static ArrayList<String> separateParts(String string) {
+    public static ArrayList<String> separateParts(String string) throws IllegalArgumentException {
         ArrayList<String> list = new ArrayList<String>();
 
         boolean foundNum = false;
@@ -132,9 +132,18 @@ final class Separator {
         char[] charArray = string.toCharArray();
         String queuedNumber = "";
         String queuedString = "";
+        boolean wasPeriod = false;
         for (int i = 0; charArray.length > i; i++) {
             char character = charArray[i];
-            if (isNumeric(character)) {
+            if (character == '.') {
+                if (wasPeriod) {
+                    throw new IllegalArgumentException("Doubled period");
+                }
+                wasPeriod = true;
+                foundString = false;
+                foundNum = true;
+                queuedNumber = queuedNumber + character;
+            } else if (isNumeric(character)) {
                 if (foundString && !queuedString.isEmpty()) {
                     list.add(queuedString);
                     queuedString = "";
@@ -142,8 +151,10 @@ final class Separator {
 
                 foundString = false;
                 foundNum = true;
+                wasPeriod = false;
                 queuedNumber = queuedNumber + character;
             } else {
+                wasPeriod = false;
                 if (foundNum && !queuedNumber.isEmpty()) {
                     list.add(queuedNumber);
                     queuedNumber = "";
@@ -187,6 +198,9 @@ final class Separator {
         boolean wasOperatorSuffix = false;
         for (int i = 0; list.size() > i; i++) {
             String string = list.get(i);
+            if (string.equals(".")) {
+                throw new IllegalArgumentException("Unexpected period");
+            }
             if (!isNumeric(string) && !isSign(string.charAt(0))) {
                 if (!Operators.isOperator(string) && !(string.equals("(") || string.equals(")"))) {
                     throw new IllegalArgumentException("Unknown operator");

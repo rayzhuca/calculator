@@ -57,8 +57,9 @@ public class Calculator extends Manager {
      */
     public String[] assembleArray(String input) throws IllegalArgumentException {
         input = Separator.combineSigns(Separator.removeWhiteSpace(input));
-        ArrayList<String> list = Separator.separateParts(input);
+        ArrayList<String> list;
         try {
+            list = Separator.separateParts(input);
             list = Separator.checkList(list);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -79,5 +80,9 @@ public class Calculator extends Manager {
         ArrayList<String> queue = Separator.shuntingYard(list);
         
         return Separator.calculatePostfix(queue);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Calculator().calculate("2+0.5"));
     }
 }
