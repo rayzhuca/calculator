@@ -10,8 +10,9 @@ import java.lang.String;
 /**
  * <h1>Organizes data from strings.</h1>
  * <p>
- * The Separator class is responsible for separating parts of a string into an array, reorganizing arrays, handling arrays and calculating them into a double.
- * <b>Note:</b> This class is only intended to be used by Calculator.
+ * The Separator class is responsible for separating parts of a string into an
+ * array, reorganizing arrays, handling arrays and calculating them into a
+ * double. <b>Note:</b> This class is only intended to be used by Calculator.
  *
  * @author Ray Z.
  * @since 2019-02-10
@@ -41,7 +42,7 @@ final class Separator {
     /**
      * Combines two signs together mathematically.
      * 
-     * @param first The first sign to be checked.
+     * @param first  The first sign to be checked.
      * @param second The second sign to be checked.
      * @return The signs combined.
      */
@@ -259,8 +260,8 @@ final class Separator {
     }
 
     /**
-     * Parses a mathematical expression from infix form into postfix form
-     * using the shunting-yard algorithm from an array of strings.
+     * Parses a mathematical expression from infix form into postfix form using the
+     * shunting-yard algorithm from an array of strings.
      * 
      * @param input[] The array of strings to be rearraged.
      * @return The post form of the input.
@@ -280,7 +281,7 @@ final class Separator {
                             || (stack.lastElement().getPrecedence() == tokenEnum.getPrecedence()
                                     && stack.lastElement().getPrefix())
                                     && !stack.lastElement().getOperator().equals("(_")) {
-                                        list.add(stack.pop().getOperator());
+                        list.add(stack.pop().getOperator());
                         if (stack.isEmpty()) {
                             break;
                         }
@@ -308,14 +309,15 @@ final class Separator {
     }
 
     /**
-     * Calculates a mathematical arraylist in postfix form into a double mathematically.
+     * Calculates a mathematical arraylist in postfix form into a double
+     * mathematically.
      * 
      * @param array[] The array to be evaluated.
      * @return The number returned.
      */
     protected static double calculatePostfix(String[] array) {
         ArrayList<Double> stack = new ArrayList<Double>();
-        
+
         for (String ele : array) {
             if (isNumeric(ele)) {
                 stack.add(Double.parseDouble(ele));
@@ -331,6 +333,6 @@ final class Separator {
             }
         }
 
-		return stack.toArray(new Double[0])[0];
+        return stack.toArray(new Double[0])[0];
     }
 }

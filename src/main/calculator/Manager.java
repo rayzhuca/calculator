@@ -10,14 +10,14 @@ package main.calculator;
  */
 public class Manager {
     private Operation.Operators[] allowedOperations = Operation.Operators.values();
-    
+
     /**
      * Makes a Calculator instance with default settings
      */
     public Manager() {
 
     }
-    
+
     /**
      * Makes a Calculator instance with an array of allowed Operations
      * 
@@ -35,9 +35,9 @@ public class Manager {
     public Operation.Operators[] getAllowedOperations() {
         return allowedOperations;
     }
-    
+
     /**
-     * Sets the operations that is allowed 
+     * Sets the operations that is allowed
      * 
      * @param operations The operations allowed
      */

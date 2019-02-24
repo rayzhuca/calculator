@@ -5,8 +5,9 @@ import java.util.ArrayList;
 /**
  * <h1>Main controller of calculation methods.</h1>
  * <p>
- * Calculator class converts a string that have a mathematical expression into a double mathematically, and can be instantiated to
- * customize specific operations avaiable, and others.
+ * Calculator class converts a string that have a mathematical expression into a
+ * double mathematically, and can be instantiated to customize specific
+ * operations avaiable, and others.
  *
  * @author Ray Z.
  * @version 1
@@ -18,7 +19,8 @@ public class Calculator extends Manager {
     /**
      * Constructor. With a specified manager instance.
      * 
-     * @param manager manages what type of operations can be used, and other settings
+     * @param manager manages what type of operations can be used, and other
+     *                settings
      */
     public Calculator(Manager manager) {
         this.manager = manager;
@@ -32,7 +34,8 @@ public class Calculator extends Manager {
     }
 
     /**
-     * Calculates a list of strings that have a mathematical expression combined into a double mathematically.
+     * Calculates a list of strings that have a mathematical expression combined
+     * into a double mathematically.
      * 
      * @param array[] The list of strings to be calculated.
      * @return The calculated number.
@@ -49,7 +52,8 @@ public class Calculator extends Manager {
     }
 
     /**
-     * Calculates a string that have a mathematical expression into a double mathematically.
+     * Calculates a string that have a mathematical expression into a double
+     * mathematically.
      * 
      * @param input The string to be calculated.
      * @return The calculated number.
@@ -69,7 +73,8 @@ public class Calculator extends Manager {
      * 
      * @param input The string to be evaluated.
      * @return The list separated by numbers and operators.
-     * @throws Exception If input contains invalid expressions, symbols, or operators.
+     * @throws Exception If input contains invalid expressions, symbols, or
+     *                   operators.
      */
     public String[] assembleArray(String input) throws Exception {
         try {

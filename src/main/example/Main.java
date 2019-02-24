@@ -1,7 +1,6 @@
 package main.example;
 
 import java.util.Scanner;
-
 import main.calculator.Calculator;
 
 /**

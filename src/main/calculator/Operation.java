@@ -18,7 +18,7 @@ final class Operation {
      * @throws IllegalArgumentException if sum is infinite
      */
     protected static double add(double... addends) throws IllegalArgumentException {
-        if (0 == addends.length|| null == addends) {
+        if (0 == addends.length || null == addends) {
             return 0;
         }
 
@@ -87,7 +87,7 @@ final class Operation {
      * 
      * @param divisor... Numbers to be divided
      * @return The quotient of divisor[]
-     * @throws ArithmeticException if dividend is divided by 0
+     * @throws ArithmeticException      if dividend is divided by 0
      * @throws IllegalArgumentException if quotient is infinite
      */
     protected static double divide(double... divisor) throws IllegalArgumentException, ArithmeticException {
@@ -118,7 +118,7 @@ final class Operation {
     /**
      * Exponentiates of doubles together
      * 
-     * @param base The base of the power
+     * @param base         The base of the power
      * @param exponents... Numbers to be exponentiated
      * @return The power of exponents[]
      * @throws ArithmeticException if the power is infinite
@@ -128,7 +128,7 @@ final class Operation {
             return base;
         }
 
-        double sign = (0 > base) ? -1: 1;
+        double sign = (0 > base) ? -1 : 1;
         double power = Math.abs(base);
 
         for (double exponent : exponents) {
@@ -149,18 +149,19 @@ final class Operation {
     /**
      * Square roots a single number
      * 
-     * @param radicand The radicand of a square root, must be positive
+     * @param radicand    The radicand of a square root, must be positive
      * @param indicies... The indicies of a square root
      * @return The square root of the radicand to the indicies
-     * @throws ArithmeticException if the square root is infinite
+     * @throws ArithmeticException      if the square root is infinite
      * @throws IllegalArgumentException if a radicand is negative
      */
-    protected static double square(double radicand, double... indicies) throws IllegalArgumentException, IllegalArgumentException {
+    protected static double square(double radicand, double... indicies)
+            throws IllegalArgumentException, IllegalArgumentException {
         if (indicies.length == 0 || indicies == null) {
-            indicies = new double[] {2};
+            indicies = new double[] { 2 };
         }
         if (radicand < 0) {
-            throw new IllegalArgumentException("Negative radicand"); 
+            throw new IllegalArgumentException("Negative radicand");
         }
 
         double square = radicand;
@@ -203,12 +204,12 @@ final class Operation {
      * Calculates a double from two numbers accordingly
      * 
      * @param operator the operation to be used
-     * @param num1 the first number
-     * @param num2 the second number
+     * @param num1     the first number
+     * @param num2     the second number
      * @return the result
      */
     protected static double operate(Operators operator, double num1, double num2) throws IllegalArgumentException {
-		if (operator == Operators.ADD) {
+        if (operator == Operators.ADD) {
             return add(num1, num2);
         } else if (operator == Operators.SUBTRACT) {
             return subtract(num1, num2);
@@ -222,14 +223,15 @@ final class Operation {
             return square(num1, num2);
         }
         throw new IllegalArgumentException("Illegal operator");
-	}
+    }
 
     /**
      * An enum of possible operations
      */
     protected enum Operators {
-        ADD("+", true, 1), SUBTRACT("-", true, 1), MULTIPLY("*", true, 2), DIVIDE("/", true, 2), EXPONENT("^", true, 3), SQAURE("sqrt", true, 3), //FACTORIAL("!", false, 4),
-        OPEN_PARENTHESIS("(_", false, 0), CLOSE_PARENTHESIS("(_", false, 0); //The parentheses are special cases
+        ADD("+", true, 1), SUBTRACT("-", true, 1), MULTIPLY("*", true, 2), DIVIDE("/", true, 2), EXPONENT("^", true, 3),
+        SQAURE("sqrt", true, 3), // FACTORIAL("!", false, 4),
+        OPEN_PARENTHESIS("(_", false, 0), CLOSE_PARENTHESIS("(_", false, 0); // The parentheses are special cases
 
         private String operator;
         private boolean isPrefix;
@@ -330,12 +332,12 @@ final class Operation {
             Operators operator;
             try {
                 operator = Operators.valueOf(string);
-            } catch(IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 return false;
             }
             return operator.getPrefix();
         }
-        
+
         /**
          * Gets the predence of the operator
          * 
