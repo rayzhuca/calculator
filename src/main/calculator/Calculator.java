@@ -34,6 +34,15 @@ public class Calculator extends Manager {
     }
 
     /**
+     * Replaces the current manager with the new manager.
+     * 
+     * @param manager The future manager
+     */
+    public void replaceManager(Manager manager) {
+        this.manager = manager;
+    }
+
+    /**
      * Calculates a list of strings that have a mathematical expression combined
      * into a double mathematically.
      * 
@@ -43,7 +52,7 @@ public class Calculator extends Manager {
      */
     public double calculate(String[] array) throws Exception {
         try {
-            Separator.checkArray(array);
+            Separator.checkArray(array, manager);
             String[] postFixList = Separator.shuntingYard(array).toArray(new String[0]);
             return Separator.calculatePostfix(postFixList);
         } catch (Exception e) {
@@ -94,7 +103,7 @@ public class Calculator extends Manager {
      */
     public boolean checkValidity(String[] array) {
         try {
-            Separator.checkArray(array);
+            Separator.checkArray(array, manager);
             return true;
         } catch (Exception e) {
             return false;
@@ -109,7 +118,7 @@ public class Calculator extends Manager {
      */
     public boolean checkValidity(ArrayList<String> list) {
         try {
-            Separator.checkList(list);
+            Separator.checkList(list, manager);
             return true;
         } catch (Exception e) {
             return false;

@@ -1,5 +1,9 @@
 package main.calculator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+
 /**
  * <h1>Manager manages settings for Calculator</h1>
  * <p>
@@ -9,51 +13,80 @@ package main.calculator;
  * @since 2019-02-9
  */
 public class Manager {
-    private Operation.Operators[] allowedOperations = Operation.Operators.values();
+    private ArrayList<Operator> allowedOperations = new ArrayList<Operator>(Arrays.asList(Operator.values()));;
 
     /**
-     * Makes a Calculator instance with default settings
+     * Constructor. Makes a manager instance with default settings.
      */
     public Manager() {
-
+        removeOperation(Operator.OPEN_PARENTHESIS);
+        removeOperation(Operator.CLOSE_PARENTHESIS);
     }
 
     /**
-     * Makes a Calculator instance with an array of allowed Operations
+     * Constructor. With specified allowed operations.
      * 
-     * @param operations[] The allowed operations to be used by the calculator
+     * @param operations[] The allowed operations to be used by the calculator.
      */
-    public Manager(Operation.Operators[] operations) {
+    public Manager(ArrayList<Operator> operations) {
         allowedOperations = operations;
     }
 
     /**
-     * Returns the allowed operations
+     * Returns the allowed operations.
      * 
-     * @return The allowed operation
+     * @return The allowed operation.
      */
-    public Operation.Operators[] getAllowedOperations() {
+    public ArrayList<Operator> getAllowedOperations() {
         return allowedOperations;
     }
 
     /**
-     * Sets the operations that is allowed
+     * Sets the operations that is allowed.
      * 
-     * @param operations The operations allowed
+     * @param operations The operations allowed.
      */
-    public void setOperations(Operation.Operators[] operations) {
+    public void setOperations(ArrayList<Operator> operations) {
         allowedOperations = operations;
     }
 
     /**
-     * Checks if operation is allowed
+     * Adds a new operator to the allowed operations.
      * 
-     * @param operation the operation to be checked
-     * @return if operation is allowed
+     * @param operator The operator to be added.
+     * @throws IllegalArgumentException If operator is OPEN_PARENTHESIS or CLOSE_PARENTHESIS.
      */
-    public boolean checkOperationValidity(Operation.Operators operation) {
-        for (Operation.Operators v : allowedOperations) {
-            if (v == operation) {
+    public void addOperation(Operator operator) throws IllegalArgumentException {
+        if (operator == Operator.OPEN_PARENTHESIS || operator == Operator.CLOSE_PARENTHESIS) {
+            throw new IllegalArgumentException("Tried to add " + operator.toString() + " to allowed operators");
+        }
+        removeOperation(operator);
+        allowedOperations.add(operator);
+    }
+
+    /**
+     * Removes a operator to the allowed operations.
+     * 
+     * @param operator The operator to be removed.
+     */
+    public void removeOperation(Operator operator) {
+        for (Iterator<Operator> iterator = allowedOperations.iterator(); iterator.hasNext(); ) {
+            Operator value = iterator.next();
+            if (value == operator) {
+                iterator.remove();
+            }
+        }
+    }
+
+    /**
+     * Checks if operation is allowed.
+     * 
+     * @param operation The operation to be checked.
+     * @return If operation is allowed, true if yes.
+     */
+    public boolean checkOperationValidity(Operator operation) {
+        for (Operator value : allowedOperations) {
+            if (value == operation) {
                 return true;
             }
         }
@@ -62,30 +95,30 @@ public class Manager {
     }
 
     /**
-     * Checks if character is an operator
+     * Checks if character is an operator.
      * 
-     * @param character the operator to be checked
-     * @return if character is a operator
+     * @param character The operator to be checked.
+     * @return If character is a operator.
      */
-    public boolean isOperatior(char character) {
-        for (Operation.Operators v : allowedOperations) {
-            if (v.getOperator().charAt(0) == character) {
+    public boolean isOperator(char character) {
+        for (Operator value : allowedOperations) {
+            if (value.getOperator().charAt(0) == character) {
                 return true;
             }
         }
 
         return false;
-    }
+    } 
 
     /**
-     * Checks if string is an operator
+     * Checks if string is an operator.
      * 
-     * @param string the operator to be checked
-     * @return if string is a operator
+     * @param string The operator to be checked.
+     * @return If string is a operator.
      */
-    public boolean isOperatior(String string) {
-        for (Operation.Operators v : allowedOperations) {
-            if (v.getOperator() == string) {
+    public boolean isOperator(String string) {
+        for (Operator value : allowedOperations) {
+            if (value.getOperator() == string) {
                 return true;
             }
         }

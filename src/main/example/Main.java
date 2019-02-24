@@ -13,7 +13,7 @@ public class Main {
     /**
      * The main method.
      * 
-     * @param args The arguments of the java file is ran.
+     * @param args[] The arguments of the java file is ran.
      */
     public static void main(String[] args) {
         Calculator calculator = new Calculator();

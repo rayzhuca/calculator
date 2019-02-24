@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import main.calculator.Operation;
-import main.calculator.Operation.Operators;
 import java.lang.String;
 
 /**
@@ -171,7 +170,7 @@ final class Separator {
                     queuedString = queuedString + character;
                 }
 
-                if (Operators.getEnumFromOperator(queuedString) != null) {
+                if (Operator.getEnumFromOperator(queuedString) != null) {
                     list.add(queuedString);
                     queuedString = "";
                 }
@@ -189,11 +188,12 @@ final class Separator {
      * Evaluates a list and checks to see if the list is valid for calculations.
      * 
      * @param list The list to be evaluated.
+     * @param manager The manager instance to be used for checking validity.
      * @return If list is valid, true if yes.
      */
-    protected static boolean checkList(ArrayList<String> list) throws IllegalArgumentException {
+    protected static boolean checkList(ArrayList<String> list, Manager manager) throws IllegalArgumentException {
         try {
-            return checkArray(list.toArray(new String[0]));
+            return checkArray(list.toArray(new String[0]), manager);
         } catch (IllegalArgumentException e) {
             throw e;
         }
@@ -203,9 +203,10 @@ final class Separator {
      * Evaluates an array and checks to see if the list is valid for calculations.
      * 
      * @param list The array to be evaluated.
+     * @param manager The manager instance to be used for checking validity.
      * @return If array is valid, true if yes.
      */
-    protected static boolean checkArray(String[] array) throws IllegalArgumentException {
+    protected static boolean checkArray(String[] array, Manager manager) throws IllegalArgumentException {
         int openParenthesis = 0;
         int closeParenthesis = 0;
         boolean wasOperatorPrefix = false;
@@ -215,13 +216,16 @@ final class Separator {
                 throw new IllegalArgumentException("Unexpected period");
             }
             if (!isNumeric(string) && !isSign(string.charAt(0))) {
-                if (!Operators.isOperator(string) && !(string.equals("(") || string.equals(")"))) {
+                if (!Operator.isOperator(string) && !(string.equals("(") || string.equals(")"))) {
                     throw new IllegalArgumentException("Unknown operator");
                 }
             }
 
-            if (Operators.isOperator(string)) {
-                Operators operator = Operators.getEnumFromOperator(string);
+            if (Operator.isOperator(string)) {
+                Operator operator = Operator.getEnumFromOperator(string);
+                if (!manager.isOperator(string)) {
+                    throw new IllegalArgumentException("Blocked operator");
+                }
                 if (wasOperatorPrefix && operator.getPrefix()) {
                     throw new IllegalArgumentException("Doubled prefix operators");
                 }
@@ -268,14 +272,14 @@ final class Separator {
      */
     protected static ArrayList<String> shuntingYard(String[] input) {
         ArrayList<String> list = new ArrayList<String>();
-        Stack<Operators> stack = new Stack<Operators>();
+        Stack<Operator> stack = new Stack<Operator>();
 
         for (int i = 0; i < input.length; i++) {
             String token = input[i];
             if (isNumeric(token)) {
                 list.add(token);
-            } else if (Operators.isOperator(token)) {
-                Operators tokenEnum = Operators.getEnumFromOperator(token);
+            } else if (Operator.isOperator(token)) {
+                Operator tokenEnum = Operator.getEnumFromOperator(token);
                 if (!stack.isEmpty()) {
                     while (stack.lastElement().getPrecedence() > tokenEnum.getPrecedence()
                             || (stack.lastElement().getPrecedence() == tokenEnum.getPrecedence()
@@ -289,13 +293,13 @@ final class Separator {
                 }
                 stack.push(tokenEnum);
             } else if (token.equals("(")) {
-                Operators tokenEnum = Operators.getEnumFromOperator(token);
+                Operator tokenEnum = Operator.getEnumFromOperator(token);
                 stack.push(tokenEnum);
             } else if (token.equals(")")) {
-                while (!stack.lastElement().equals(Operators.OPEN_PARENTHESIS)) {
+                while (!stack.lastElement().equals(Operator.OPEN_PARENTHESIS)) {
                     list.add(stack.pop().getOperator());
                 }
-                while (stack.lastElement().equals(Operators.OPEN_PARENTHESIS)) {
+                while (stack.lastElement().equals(Operator.OPEN_PARENTHESIS)) {
                     stack.pop();
                 }
             }
@@ -321,13 +325,13 @@ final class Separator {
         for (String ele : array) {
             if (isNumeric(ele)) {
                 stack.add(Double.parseDouble(ele));
-            } else if (Operators.isOperator(ele)) {
+            } else if (Operator.isOperator(ele)) {
                 double num2 = stack.get(stack.size() - 1);
                 stack.remove(stack.size() - 1);
                 double num1 = stack.get(stack.size() - 1);
                 stack.remove(stack.size() - 1);
 
-                Operators operator = Operators.getEnumFromOperator(ele);
+                Operator operator = Operator.getEnumFromOperator(ele);
 
                 stack.add(Operation.operate(operator, num1, num2));
             }
