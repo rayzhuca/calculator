@@ -1,4 +1,4 @@
-package main;
+package main.calculator;
 
 /**
  * <h1>Operation contains methods for calculations</h1>

@@ -1,10 +1,10 @@
-package main;
+package main.calculator;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
-import main.Operation;
-import main.Operation.Operators;
+import main.calculator.Operation;
+import main.calculator.Operation.Operators;
 import java.lang.String;
 
 /**
@@ -134,8 +134,7 @@ final class Separator {
             char character = charArray[i];
             if (i == 0 && isSign(character)) {
                 queuedNumber = queuedNumber + character;
-            }
-            if (character == '.') {
+            } else if (character == '.') {
                 if (wasPeriod) {
                     throw new IllegalArgumentException("Doubled period");
                 }

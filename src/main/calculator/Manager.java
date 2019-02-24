@@ -1,4 +1,4 @@
-package main;
+package main.calculator;
 
 /**
  * <h1>Manager manages settings for Calculator</h1>
