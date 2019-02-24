@@ -3,7 +3,7 @@ Calculator is a library for calculating a string into a double in Java.
 
 ## How to use
 ### Calculate a number
-```
+```java
 public static void main(String[] args) throws Exception {
   System.out.println(new Calculator().calculate("5+2/4"));
 }
@@ -14,7 +14,7 @@ Output:
 ```
 
 ### Block an operator
-```
+```java
 public static void main(String[] args) {
   Calculator calculator = new Calculator();
   Manager manager = new Manager();
@@ -32,7 +32,7 @@ java.lang.IllegalArgumentException: Blocked operator
 ```
 
 ### Check validity before calculating
-```
+```java
 public static void main(String[] args) {
   Calculator calculator = new Calculator();
   Scanner scanner = new Scanner(System.in);
