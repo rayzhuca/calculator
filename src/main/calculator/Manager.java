@@ -5,7 +5,7 @@ package main.calculator;
  * <p>
  * <b>Note:</b> This class is only intended to be used by Calculator
  *
- * @author Ray
+ * @author Ray Z.
  * @since 2019-02-9
  */
 public class Manager {
