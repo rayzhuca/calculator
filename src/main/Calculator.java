@@ -3,12 +3,12 @@ package main;
 import java.util.ArrayList;
 
 /**
- * <h1>Main controller of calculation methods</h1>
+ * <h1>Main controller of calculation methods.</h1>
  * <p>
- * Calculator class converts a string to a double, and can be instantiated to
+ * Calculator class converts a string that have a mathematical expression into a double mathematically, and can be instantiated to
  * customize specific operations avaiable, and others.
  *
- * @author Ray
+ * @author Ray Z.
  * @version 1
  * @since 2019-02-9
  */
@@ -16,29 +16,27 @@ public class Calculator extends Manager {
     private Manager manager;
 
     /**
-     * Makes a Calculator instance with a pre-made Manager instance
+     * Constructor. With a specified manager instance.
      * 
-     * @param manager The manager to be used
+     * @param manager manages what type of operations can be used, and other settings
      */
     public Calculator(Manager manager) {
         this.manager = manager;
     }
 
     /**
-     * Makes a Calculator instance with default settings
-     * 
-     * @return an instance of Calculator
+     * Constructor. With a default manager instance.
      */
     public Calculator() {
         this(new Manager());
     }
 
     /**
-     * Calculates a string to double
+     * Calculates a string that have a mathematical expression into a double mathematically.
      * 
-     * @param input String to be calculated
-     * @return Calculated number
-     * @throws Exception if input is invalid
+     * @param input The string to be calculated.
+     * @return The calculated number.
+     * @throws Exception If input contains invalid expressions.
      */
     public double calculate(String input) throws Exception {
         try {
@@ -50,28 +48,11 @@ public class Calculator extends Manager {
     }
 
     /**
-     * Calculates a string into a list to be organized
+     * Calculates a list of strings that have a mathematical expression combined into a double mathematically.
      * 
-     * @param input String to be calculated
-     * @return mathematically organized list
-     * @throws Exception if input is invalid
-     */
-    public String[] assembleArray(String input) throws Exception {
-        try {
-            input = Separator.combineSigns(Separator.removeWhiteSpace(input));
-            ArrayList<String> list = Separator.separateParts(input);
-            return list.toArray(new String[0]);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    /**
-     * Calculates an array to a double
-     * 
-     * @param array[] Strings to be calculated
-     * @return calculated number
-     * @throws Exception if list is invalid
+     * @param array[] The list of strings to be calculated.
+     * @return The calculated number.
+     * @throws Exception If the list contains invalid expressions.
      */
     public double calculate(String[] array) throws Exception {
         try {
@@ -84,10 +65,27 @@ public class Calculator extends Manager {
     }
 
     /**
-     * Checks if an array is valid for calculating
+     * Evaluates a string into a list of numbers and operators.
      * 
-     * @param array[] the array to be calculated
-     * @return if array is invalid
+     * @param input The string to be evaluated.
+     * @return The list separated by numbers and operators.
+     * @throws Exception If input contains invalid expressions, symbols, or operators.
+     */
+    public String[] assembleArray(String input) throws Exception {
+        try {
+            input = Separator.combineSigns(Separator.removeWhiteSpace(input));
+            ArrayList<String> list = Separator.separateParts(input);
+            return list.toArray(new String[0]);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
+     * Checks if an array is valid for calculating.
+     * 
+     * @param array[] The array to be evaluated.
+     * @return If array is valid, true if valid.
      */
     public boolean checkValidity(String[] array) {
         try {
@@ -99,10 +97,10 @@ public class Calculator extends Manager {
     }
 
     /**
-     * Checks if a list is valid for calculating
+     * Checks if a list is valid for calculating.
      * 
-     * @param list[] the list to be calculated
-     * @return if list is invalid
+     * @param list[] The list to be evaluated.
+     * @return If list is valid, true if valid.
      */
     public boolean checkValidity(ArrayList<String> list) {
         try {
