@@ -207,7 +207,7 @@ final class Operation {
      * @param num2 the second number
      * @return the result
      */
-    public static double operate(Operators operator, double num1, double num2) throws IllegalArgumentException {
+    protected static double operate(Operators operator, double num1, double num2) throws IllegalArgumentException {
 		if (operator == Operators.ADD) {
             return add(num1, num2);
         } else if (operator == Operators.SUBTRACT) {
@@ -227,7 +227,7 @@ final class Operation {
     /**
      * An enum of possible operations
      */
-    public enum Operators {
+    protected enum Operators {
         ADD("+", true, 1), SUBTRACT("-", true, 1), MULTIPLY("*", true, 2), DIVIDE("/", true, 2), EXPONENT("^", true, 3), SQAURE("sqrt", true, 3), //FACTORIAL("!", false, 4),
         OPEN_PARENTHESIS("(_", false, 0), CLOSE_PARENTHESIS("(_", false, 0); //The parentheses are special cases
 
@@ -250,7 +250,7 @@ final class Operation {
         /**
          * Checks if the operator is a parenthesis
          */
-        public boolean isParenthesis(Operators operator) {
+        protected boolean isParenthesis(Operators operator) {
             return operator.operator == "(_" || operator.operator == ")_";
         }
 
@@ -259,7 +259,7 @@ final class Operation {
          * 
          * @return the operator of the enum
          */
-        public String getOperator() {
+        protected String getOperator() {
             return operator;
         }
 
@@ -269,7 +269,7 @@ final class Operation {
          * @param string to be checked
          * @return if string is an operator
          */
-        public static boolean isOperator(String string) {
+        protected static boolean isOperator(String string) {
             for (Operators operation : Operators.values()) {
                 if (operation.getOperator().toLowerCase().equals(string.toLowerCase())) {
                     if (operation.operator == "(_" || operation.operator == ")_") {
@@ -287,7 +287,7 @@ final class Operation {
          * @param character to be checked
          * @return if character is an operator
          */
-        public boolean isOperator(char character) {
+        protected boolean isOperator(char character) {
             for (Operators operation : Operators.values()) {
                 if (operation.toString().toLowerCase().equals(Character.toString(character).toLowerCase())) {
                     if (operation.operator == "(_" || operation.operator == ")_") {
@@ -302,7 +302,7 @@ final class Operation {
         /**
          * Finds the enum based on the operator
          */
-        public static Operators getEnumFromOperator(String operator) throws IllegalArgumentException {
+        protected static Operators getEnumFromOperator(String operator) throws IllegalArgumentException {
             for (Operators operation : Operators.values()) {
                 if (operation.operator.toLowerCase().equals(operator.toLowerCase())) {
                     return operation;
@@ -316,7 +316,7 @@ final class Operation {
          * 
          * @return if the operator is a prefix
          */
-        public boolean getPrefix() {
+        protected boolean getPrefix() {
             return isPrefix;
         }
 
@@ -326,7 +326,7 @@ final class Operation {
          * @param string of the operator
          * @return if operator is a prefix
          */
-        public static boolean isPrefix(String string) {
+        protected static boolean isPrefix(String string) {
             Operators operator;
             try {
                 operator = Operators.valueOf(string);
@@ -341,7 +341,7 @@ final class Operation {
          * 
          * @return the precedence of the operator
          */
-        public int getPrecedence() {
+        protected int getPrecedence() {
             return precedence;
         }
     }

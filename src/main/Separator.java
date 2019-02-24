@@ -26,7 +26,7 @@ final class Separator {
      * @param string the string to be manipulated
      * @return the string without whitespace
      */
-    public static String removeWhiteSpace(String string) {
+    protected static String removeWhiteSpace(String string) {
         return string.replaceAll("\\s+", "");
     }
 
@@ -57,7 +57,7 @@ final class Separator {
      * @param character to be checked
      * @return if character is numeric
      */
-    public static boolean isNumeric(char character) {
+    protected static boolean isNumeric(char character) {
         try {
             Double.parseDouble(String.valueOf(character));
         } catch (NumberFormatException e) {
@@ -72,7 +72,7 @@ final class Separator {
      * @param string to be checked
      * @return if string is numeric
      */
-    public static boolean isNumeric(String string) {
+    protected static boolean isNumeric(String string) {
         try {
             Double.parseDouble(string);
         } catch (NumberFormatException e) {
@@ -124,7 +124,7 @@ final class Separator {
      * @param string The string to be separated
      * @return A string list of number and others in order
      */
-    public static ArrayList<String> separateParts(String string) throws IllegalArgumentException {
+    protected static ArrayList<String> separateParts(String string) throws IllegalArgumentException {
         ArrayList<String> list = new ArrayList<String>();
 
         boolean foundNum = false;
@@ -191,7 +191,7 @@ final class Separator {
      * @param list of the original list
      * @return the new list with grouped operations
      */
-    public static ArrayList<String> checkList(ArrayList<String> list) throws IllegalArgumentException {
+    protected static ArrayList<String> checkList(ArrayList<String> list) throws IllegalArgumentException {
         int openParenthesis = 0;
         int closeParenthesis = 0;
         boolean wasOperatorPrefix = false;
@@ -253,7 +253,7 @@ final class Separator {
      * @param input the input to be rearraged
      * @return the postfix form of the input
      */
-    public static ArrayList<String> shuntingYard(String[] input) {
+    protected static ArrayList<String> shuntingYard(String[] input) {
         ArrayList<String> queue = new ArrayList<String>();
         Stack<Operators> stack = new Stack<Operators>();
 
@@ -301,7 +301,7 @@ final class Separator {
      * @param queue the queue to be calculated
      * @return the number returned
      */
-    public static double calculatePostfix(ArrayList<String> queue) {
+    protected static double calculatePostfix(ArrayList<String> queue) {
         ArrayList<Double> stack = new ArrayList<Double>();
         String[] array = queue.toArray(new String[0]);
         int i = 0;

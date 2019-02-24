@@ -17,7 +17,7 @@ public class BinaryTree {
      */
     @FunctionalInterface
     
-    static interface ValueManipulator {
+    private static interface ValueManipulator {
         /**
          * Called when run is ran
          * 
