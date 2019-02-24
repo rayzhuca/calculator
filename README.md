@@ -1,7 +1,10 @@
-## Calculator
-Calculator is a library for calculating a string into a double in Java, for example:
+# Calculator
+Calculator is a library for calculating a string into a double in Java.
+
+## How to use
+### Calculate a number
 ```
-public static void main(String[] args) {
+public static void main(String[] args) throws Exception {
   System.out.println(new Calculator().calculate("5+2/4"));
 }
 ```
@@ -10,12 +13,45 @@ Output:
 5.5
 ```
 
+### Block an operator
+```
+public static void main(String[] args) {
+  Calculator calculator = new Calculator();
+  Manager manager = new Manager();
+  manager.removeOperation(Operator.ADD);
+  try {
+    System.out.println(calculator.calculate("2+2"));
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+}
+```
+Output:
+```
+java.lang.IllegalArgumentException: Blocked operator
+```
+
+### Check validity before calculating
+```
+public static void main(String[] args) {
+  Calculator calculator = new Calculator();
+  Scanner scanner = new Scanner(System.in);
+  Manager manager = new Manager();
+  
+  manager.removeOperation(Operator.ADD);   
+  System.out.println(calculator.checkValidity("2+2"));
+}
+```
+Output:
+```
+false
+```
+
 ## Bugs
 There are plenty of bugs and problems with this library, for example operations that is unary may not currently work.
 Please post bugs into Issues page for me to fix.
 
 ## Upcoming updates
-- Control what type operations can be used for each calculator instance
 - Unary operators
 - Postfix operators, like factorials
 - Algebra
