@@ -32,6 +32,23 @@ public class Calculator extends Manager {
     }
 
     /**
+     * Calculates a list of strings that have a mathematical expression combined into a double mathematically.
+     * 
+     * @param array[] The list of strings to be calculated.
+     * @return The calculated number.
+     * @throws Exception If the list contains invalid expressions.
+     */
+    public double calculate(String[] array) throws Exception {
+        try {
+            Separator.checkArray(array);
+            String[] postFixList = Separator.shuntingYard(array).toArray(new String[0]);
+            return Separator.calculatePostfix(postFixList);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    /**
      * Calculates a string that have a mathematical expression into a double mathematically.
      * 
      * @param input The string to be calculated.
@@ -42,23 +59,6 @@ public class Calculator extends Manager {
         try {
             String[] array = assembleArray(input);
             return calculate(array);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    /**
-     * Calculates a list of strings that have a mathematical expression combined into a double mathematically.
-     * 
-     * @param array[] The list of strings to be calculated.
-     * @return The calculated number.
-     * @throws Exception If the list contains invalid expressions.
-     */
-    public double calculate(String[] array) throws Exception {
-        try {
-            ArrayList<String> queue = Separator.shuntingYard(array);
-            Separator.checkArray(array);
-            return Separator.calculatePostfix(queue);
         } catch (Exception e) {
             throw e;
         }

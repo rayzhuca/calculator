@@ -1,9 +1,6 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
 import java.util.Stack;
 
 import main.Operation;
@@ -11,51 +8,52 @@ import main.Operation.Operators;
 import java.lang.String;
 
 /**
- * <h1>Separates string to be calculated</h1>
+ * <h1>Organizes data from strings.</h1>
  * <p>
- * <b>Note:</b> This class is only intended to be used by Calculator
+ * The Separator class is responsible for separating parts of a string into an array, reorganizing arrays, handling arrays and calculating them into a double.
+ * <b>Note:</b> This class is only intended to be used by Calculator.
  *
- * @author Ray
+ * @author Ray Z.
  * @since 2019-02-10
  */
 final class Separator {
 
     /**
-     * Removes whitespace in a string
+     * Removes spaces in a string.
      * 
-     * @param string the string to be manipulated
-     * @return the string without whitespace
+     * @param string The string to be evaluated.
+     * @return The string without spaces.
      */
     protected static String removeWhiteSpace(String string) {
         return string.replaceAll("\\s+", "");
     }
 
     /**
-     * Checks if character is '+' or '-'
+     * Checks if character is a sign.
      * 
-     * @param character the character to be checked
-     * @return if character is a sign
+     * @param character The character to be checked.
+     * @return If character is a sign, true if yes.
      */
     private static boolean isSign(char character) {
         return character == '+' || character == '-' ? true : false;
     }
 
     /**
-     * Combines two signs
+     * Combines two signs together mathematically.
      * 
-     * @param first  the first sign to be checked
-     * @param second the second sign to be checked
-     * @return the sign combined
+     * @param first The first sign to be checked.
+     * @param second The second sign to be checked.
+     * @return The signs combined.
      */
     private static char combineSign(char first, char second) {
         return (first == '+') ? (second == '+' ? '+' : '-') : (second == '+' ? '-' : '+');
     }
 
     /**
-     * Checks if a character is numeric
+     * Checks if a character is numeric.
      * 
-     * @param character to be checked
-     * @return if character is numeric
+     * @param character The character to be checked.
+     * @return If the character is numeric, true if yes.
      */
     protected static boolean isNumeric(char character) {
         try {
@@ -67,10 +65,10 @@ final class Separator {
     }
 
     /**
-     * Checks if a string is numeric
+     * Checks if a string is numeric.
      * 
-     * @param string to be checked
-     * @return if string is numeric
+     * @param string The string to be checked.
+     * @return If the string is numeric, true if yes.
      */
     protected static boolean isNumeric(String string) {
         try {
@@ -82,10 +80,10 @@ final class Separator {
     }
 
     /**
-     * Combines signs (- and +) together
+     * Takes a string and combines all signs inside mathematically.
      * 
-     * @param original The string to be manipulated
-     * @return Manipulated string
+     * @param original The string to be manipulated.
+     * @return The manipulated string.
      */
     public static String combineSigns(String original) {
         ArrayList<String> list = new ArrayList<String>();
@@ -109,7 +107,6 @@ final class Separator {
         }
 
         String[] manipulatedArray = list.toArray(new String[list.size()]);
-        ;
         String manipulated = "";
         for (String str : manipulatedArray) {
             manipulated = manipulated + str;
@@ -119,10 +116,10 @@ final class Separator {
     }
 
     /**
-     * Separates string into numbers and operations
+     * Separates string into numbers and operators into an arraylist.
      * 
-     * @param string The string to be separated
-     * @return A string list of number and others in order
+     * @param string The string to be separated into an arraylist.
+     * @return An arraylist of number and others in order.
      */
     protected static ArrayList<String> separateParts(String string) throws IllegalArgumentException {
         ArrayList<String> list = new ArrayList<String>();
@@ -135,6 +132,9 @@ final class Separator {
         boolean wasPeriod = false;
         for (int i = 0; charArray.length > i; i++) {
             char character = charArray[i];
+            if (i == 0 && isSign(character)) {
+                queuedNumber = queuedNumber + character;
+            }
             if (character == '.') {
                 if (wasPeriod) {
                     throw new IllegalArgumentException("Doubled period");
@@ -186,10 +186,10 @@ final class Separator {
     }
 
     /**
-     * Checks if a list is valid to be calculated
+     * Evaluates a list and checks to see if the list is valid for calculations.
      * 
-     * @param list of the original list
-     * @return if list is valid
+     * @param list The list to be evaluated.
+     * @return If list is valid, true if yes.
      */
     protected static boolean checkList(ArrayList<String> list) throws IllegalArgumentException {
         try {
@@ -200,10 +200,10 @@ final class Separator {
     }
 
     /**
-     * Checks if a list is valid to be calculated
+     * Evaluates an array and checks to see if the list is valid for calculations.
      * 
-     * @param list of the original list
-     * @return if list is valid
+     * @param list The array to be evaluated.
+     * @return If array is valid, true if yes.
      */
     protected static boolean checkArray(String[] array) throws IllegalArgumentException {
         int openParenthesis = 0;
@@ -261,19 +261,19 @@ final class Separator {
 
     /**
      * Parses a mathematical expression from infix form into postfix form
-     * using the shunting-yard algorithm
+     * using the shunting-yard algorithm from an array of strings.
      * 
-     * @param input the input to be rearraged
-     * @return the postfix form of the input
+     * @param input[] The array of strings to be rearraged.
+     * @return The post form of the input.
      */
     protected static ArrayList<String> shuntingYard(String[] input) {
-        ArrayList<String> queue = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<String>();
         Stack<Operators> stack = new Stack<Operators>();
 
         for (int i = 0; i < input.length; i++) {
             String token = input[i];
             if (isNumeric(token)) {
-                queue.add(token);
+                list.add(token);
             } else if (Operators.isOperator(token)) {
                 Operators tokenEnum = Operators.getEnumFromOperator(token);
                 if (!stack.isEmpty()) {
@@ -281,7 +281,7 @@ final class Separator {
                             || (stack.lastElement().getPrecedence() == tokenEnum.getPrecedence()
                                     && stack.lastElement().getPrefix())
                                     && !stack.lastElement().getOperator().equals("(_")) {
-                        queue.add(stack.pop().getOperator());
+                                        list.add(stack.pop().getOperator());
                         if (stack.isEmpty()) {
                             break;
                         }
@@ -293,7 +293,7 @@ final class Separator {
                 stack.push(tokenEnum);
             } else if (token.equals(")")) {
                 while (!stack.lastElement().equals(Operators.OPEN_PARENTHESIS)) {
-                    queue.add(stack.pop().getOperator());
+                    list.add(stack.pop().getOperator());
                 }
                 while (stack.lastElement().equals(Operators.OPEN_PARENTHESIS)) {
                     stack.pop();
@@ -302,22 +302,20 @@ final class Separator {
         }
 
         while (!stack.isEmpty()) {
-            queue.add(stack.pop().getOperator());
+            list.add(stack.pop().getOperator());
         }
 
-        return queue;
+        return list;
     }
 
     /**
-     * Calculates a queue that is a mathematical expression in postfix form into a double
+     * Calculates a mathematical arraylist in postfix form into a double mathematically.
      * 
-     * @param queue the queue to be calculated
-     * @return the number returned
+     * @param array[] The array to be evaluated.
+     * @return The number returned.
      */
-    protected static double calculatePostfix(ArrayList<String> queue) {
+    protected static double calculatePostfix(String[] array) {
         ArrayList<Double> stack = new ArrayList<Double>();
-        String[] array = queue.toArray(new String[0]);
-        int i = 0;
         
         for (String ele : array) {
             if (isNumeric(ele)) {

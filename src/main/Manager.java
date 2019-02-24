@@ -1,7 +1,5 @@
 package main;
 
-import java.util.List;
-
 /**
  * <h1>Manager manages settings for Calculator</h1>
  * <p>
