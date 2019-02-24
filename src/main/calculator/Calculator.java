@@ -124,4 +124,19 @@ public class Calculator extends Manager {
             return false;
         }
     }
+
+    /**
+     * Checks if a string is valid for calculating.
+     * 
+     * @param string The string to be evaluated.
+     * @return If string is valid, true if valid.
+     */
+    public boolean checkValidity(String input) {
+        try {
+            Separator.checkArray(assembleArray(input), manager);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
