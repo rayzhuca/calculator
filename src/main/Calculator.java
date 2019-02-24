@@ -1,8 +1,6 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.Scanner;
 
 /**
  * <h1>Main controller of calculation methods</h1>
@@ -112,14 +110,6 @@ public class Calculator extends Manager {
             return true;
         } catch (Exception e) {
             return false;
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            System.out.println(new Calculator().calculate("2+2/2"));
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
