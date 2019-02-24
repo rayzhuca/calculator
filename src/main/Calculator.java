@@ -40,32 +40,32 @@ public class Calculator extends Manager {
      * 
      * @param input String to be calculated
      * @return Calculated number
-     * @throws IllegalArgumentException if input is invalid
+     * @throws Exception if input is invalid
      */
-    public double calculate(String input) throws IllegalArgumentException {
-        String[] array = assembleArray(input);
-        
-        return calculate(array);
+    public double calculate(String input) throws Exception {
+        try {
+            String[] array = assembleArray(input);
+            return calculate(array);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     /**
-     * Calculates a string into an mathematically organized list to be calculated
+     * Calculates a string into a list to be organized
      * 
      * @param input String to be calculated
      * @return mathematically organized list
-     * @throws IllegalArgumentException if input is invalid
+     * @throws Exception if input is invalid
      */
-    public String[] assembleArray(String input) throws IllegalArgumentException {
-        input = Separator.combineSigns(Separator.removeWhiteSpace(input));
-        ArrayList<String> list;
+    public String[] assembleArray(String input) throws Exception {
         try {
-            list = Separator.separateParts(input);
-            list = Separator.checkList(list);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
+            input = Separator.combineSigns(Separator.removeWhiteSpace(input));
+            ArrayList<String> list = Separator.separateParts(input);
+            return list.toArray(new String[0]);
+        } catch (Exception e) {
+            throw e;
         }
-        
-        return list.toArray(new String[0]);
     }
 
     /**
@@ -73,12 +73,23 @@ public class Calculator extends Manager {
      * 
      * @param list String to be calculated
      * @return calculated number
+     * @throws Exception if list is invalid
      */
-    public double calculate(String[] list) throws IllegalArgumentException {
-        double solution = 0;
+    public double calculate(String[] list) throws Exception {
+        try {
+            ArrayList<String> queue = Separator.shuntingYard(list);
+            Separator.checkList(list);
+            return Separator.calculatePostfix(queue);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 
-        ArrayList<String> queue = Separator.shuntingYard(list);
-        
-        return Separator.calculatePostfix(queue);
+    public static void main(String[] args) {
+        try {
+            System.out.println(new Calculator().calculate("2+2/2"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

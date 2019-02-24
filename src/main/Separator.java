@@ -189,15 +189,28 @@ final class Separator {
      * Checks if a list is valid to be calculated
      * 
      * @param list of the original list
-     * @return the new list with grouped operations
+     * @return if list is valid
      */
-    protected static ArrayList<String> checkList(ArrayList<String> list) throws IllegalArgumentException {
+    protected static boolean checkList(ArrayList<String> list) throws IllegalArgumentException {
+        try {
+            return checkList(list.toArray(new String[0]));
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
+    }
+
+    /**
+     * Checks if a list is valid to be calculated
+     * 
+     * @param list of the original list
+     * @return if list is valid
+     */
+    protected static boolean checkList(String[] array) throws IllegalArgumentException {
         int openParenthesis = 0;
         int closeParenthesis = 0;
         boolean wasOperatorPrefix = false;
         boolean wasOperatorSuffix = false;
-        for (int i = 0; list.size() > i; i++) {
-            String string = list.get(i);
+        for (String string : array) {
             if (string.equals(".")) {
                 throw new IllegalArgumentException("Unexpected period");
             }
@@ -243,7 +256,7 @@ final class Separator {
             }
         }
 
-        return list;
+        return true;
     }
 
     /**
