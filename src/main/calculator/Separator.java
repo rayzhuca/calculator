@@ -223,14 +223,14 @@ final class Separator {
 
             if (Operator.isOperator(string)) {
                 Operator operator = Operator.getEnumFromOperator(string);
-                if (!manager.isOperator(string)) {
-                    throw new IllegalArgumentException("Blocked operator");
-                }
                 if (wasOperatorPrefix && operator.getPrefix()) {
                     throw new IllegalArgumentException("Doubled prefix operators");
                 }
                 if (wasOperatorSuffix && !operator.getPrefix()) {
                     throw new IllegalArgumentException("Doubled suffix operators");
+                }
+                if (!(manager.isOperator(string) && string != ")" || string != "(")) {
+                    throw new IllegalArgumentException("Blocked operator");
                 }
 
                 if (operator.getPrefix()) {
@@ -284,7 +284,7 @@ final class Separator {
                     while (stack.lastElement().getPrecedence() > tokenEnum.getPrecedence()
                             || (stack.lastElement().getPrecedence() == tokenEnum.getPrecedence()
                                     && stack.lastElement().getPrefix())
-                                    && !stack.lastElement().getOperator().equals("(_")) {
+                                    && !stack.lastElement().getOperator().equals("_(")) {
                         list.add(stack.pop().getOperator());
                         if (stack.isEmpty()) {
                             break;
@@ -293,14 +293,20 @@ final class Separator {
                 }
                 stack.push(tokenEnum);
             } else if (token.equals("(")) {
-                Operator tokenEnum = Operator.getEnumFromOperator(token);
+                Operator tokenEnum = Operator.getEnumFromOperator("_" + token);
                 stack.push(tokenEnum);
             } else if (token.equals(")")) {
-                while (!stack.lastElement().equals(Operator.OPEN_PARENTHESIS)) {
+                while (!(stack.lastElement() == Operator.OPEN_PARENTHESIS)) {
                     list.add(stack.pop().getOperator());
                 }
-                while (stack.lastElement().equals(Operator.OPEN_PARENTHESIS)) {
+                if (stack.isEmpty()) {
+                    continue;
+                }
+                while (stack.lastElement() == Operator.OPEN_PARENTHESIS) {
                     stack.pop();
+                    if (stack.isEmpty()) {
+                        break;
+                    }
                 }
             }
         }

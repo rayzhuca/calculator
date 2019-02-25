@@ -6,7 +6,7 @@ package main.calculator;
 public enum Operator {
     ADD("+", true, 1), SUBTRACT("-", true, 1), MULTIPLY("*", true, 2), DIVIDE("/", true, 2), EXPONENT("^", true, 3),
     SQAURE("sqrt", true, 3), // FACTORIAL("!", false, 4),
-    OPEN_PARENTHESIS("(_", false, 0), CLOSE_PARENTHESIS("(_", false, 0); // The parentheses are special cases
+    OPEN_PARENTHESIS("_(", false, 0), CLOSE_PARENTHESIS("_(", false, 0); // The parentheses are special cases
 
     private String operator;
     private boolean isPrefix;
@@ -28,7 +28,7 @@ public enum Operator {
      * Checks if the operator is a parenthesis
      */
     protected boolean isParenthesis(Operator operator) {
-        return operator.operator == "(_" || operator.operator == ")_";
+        return operator.operator == "_(" || operator.operator == "_)";
     }
 
     /**
@@ -49,7 +49,7 @@ public enum Operator {
     protected static boolean isOperator(String string) {
         for (Operator operation : Operator.values()) {
             if (operation.getOperator().toLowerCase().equals(string.toLowerCase())) {
-                if (operation.operator == "(_" || operation.operator == ")_") {
+                if (operation.operator == "_(" || operation.operator == "_)") {
                     continue;
                 }
                 return true;
@@ -67,7 +67,7 @@ public enum Operator {
     protected boolean isOperator(char character) {
         for (Operator operation : Operator.values()) {
             if (operation.toString().toLowerCase().equals(Character.toString(character).toLowerCase())) {
-                if (operation.operator == "(_" || operation.operator == ")_") {
+                if (operation.operator == "_(" || operation.operator == "_)") {
                     continue;
                 }
                 return true;
