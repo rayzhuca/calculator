@@ -90,8 +90,7 @@ public enum Operator {
      * Finds the enum based on the operator.
      * 
      * @param operator The operator to be evaluated.
-     * @return The enum of the operator.
-     * @throws IllegalArgumentException If the operator does not exist.
+     * @return The enum of the operator, null if operator is not found.
      */
     protected static Operator getEnumFromOperator(String operator) throws IllegalArgumentException {
         for (Operator operation : Operator.values()) {
@@ -99,7 +98,8 @@ public enum Operator {
                 return operation;
             }
         }
-        throw new IllegalArgumentException("Operator not found");
+        
+        return null;
     }
 
     /**

@@ -236,7 +236,7 @@ final class Separator {
                 if (wasOperatorSuffix && !operator.getPrefix()) {
                     throw new IllegalArgumentException("Doubled suffix operators");
                 }
-                if (!(manager.isOperator(string) && string != ")" || string != "(")) {
+                if (!manager.checkOperationValidity(operator)) {
                     throw new IllegalArgumentException("Blocked operator");
                 }
 

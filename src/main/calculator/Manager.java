@@ -13,7 +13,7 @@ import java.util.Iterator;
  * @since 2019-02-9
  */
 public class Manager {
-    private ArrayList<Operator> allowedOperations = new ArrayList<Operator>(Arrays.asList(Operator.values()));;
+    private ArrayList<Operator> allowedOperations = new ArrayList<Operator>(Arrays.asList(Operator.values()));
 
     /**
      * Constructor. Makes a manager instance with default settings.
@@ -68,14 +68,18 @@ public class Manager {
      * Removes a operator to the allowed operations.
      * 
      * @param operator The operator to be removed.
+     * @return If the operator was ever found, true if yes.
      */
-    public void removeOperation(Operator operator) {
+    public boolean removeOperation(Operator operator) throws IllegalArgumentException {
+        boolean haveFound = false;
         for (Iterator<Operator> iterator = allowedOperations.iterator(); iterator.hasNext(); ) {
             Operator value = iterator.next();
             if (value == operator) {
+                haveFound = true;
                 iterator.remove();
             }
         }
+        return haveFound;
     }
 
     /**

@@ -133,8 +133,7 @@ public class Calculator extends Manager {
      */
     public boolean checkValidity(String input) {
         try {
-            Separator.checkArray(assembleArray(input), manager);
-            return true;
+            return checkValidity(assembleArray(input));
         } catch (Exception e) {
             return false;
         }
