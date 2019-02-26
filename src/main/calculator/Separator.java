@@ -207,11 +207,16 @@ final class Separator {
      * @return If array is valid, true if yes.
      */
     protected static boolean checkArray(String[] array, Manager manager) throws IllegalArgumentException {
-        int openParenthesis = 0;
-        int closeParenthesis = 0;
+        int openParentheses = 0;
+        int closeParentheses = 0;
         boolean wasOperatorPrefix = false;
         boolean wasOperatorSuffix = false;
         for (String string : array) {
+            if (string.equals("(")) {
+                openParentheses++;
+            } else if (string.equals(")")) {
+                closeParentheses++;
+            }
             if (string.equals(".")) {
                 throw new IllegalArgumentException("Unexpected period");
             }
@@ -246,18 +251,11 @@ final class Separator {
             }
         }
 
-        if (openParenthesis > closeParenthesis) {
-            if (openParenthesis - closeParenthesis == 1) {
-                throw new IllegalArgumentException("Unexpected open parenthesis");
-            } else {
-                throw new IllegalArgumentException("Unexpected open parentheses");
-            }
-        } else if (closeParenthesis > openParenthesis) {
-            if (closeParenthesis - openParenthesis == 1) {
-                throw new IllegalArgumentException("Unexpected close parenthesis");
-            } else {
-                throw new IllegalArgumentException("Unexpected close parentheses");
-            }
+        if (openParentheses != closeParentheses) {
+            throw new IllegalArgumentException("Expected " + Integer.toString(Math.max(openParentheses, closeParentheses) - Math.min(openParentheses, closeParentheses))
+            + " more "
+            + (openParentheses > closeParentheses ? "close " : "open ")
+            + (openParentheses - closeParentheses == 1 ? "parenthesis" : "parentheses"));
         }
 
         return true;
