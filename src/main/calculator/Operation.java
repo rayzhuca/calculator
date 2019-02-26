@@ -87,7 +87,7 @@ final class Operation {
      * 
      * @param divisor... Numbers to be divided.
      * @return The quotient of divisor[].
-     * @throws ArithmeticException      If dividend is divided by 0.
+     * @throws ArithmeticException If dividend is divided by 0.
      * @throws IllegalArgumentException If quotient is infinite.
      */
     protected static double divide(double... divisor) throws IllegalArgumentException, ArithmeticException {
@@ -118,7 +118,7 @@ final class Operation {
     /**
      * Exponentiates of doubles together.
      * 
-     * @param base         The base of the power.
+     * @param base The base of the power.
      * @param exponents... Numbers to be exponentiated.
      * @return The power of exponents.
      * @throws ArithmeticException If the power is infinite.
@@ -149,10 +149,10 @@ final class Operation {
     /**
      * Square roots a single number.
      * 
-     * @param radicand    The radicand of a square root, must be positive.
+     * @param radicand The radicand of a square root, must be positive.
      * @param indicies... The indicies of a square root.
      * @return The square root of the radicand to the indicies.
-     * @throws ArithmeticException      If the square root is infinite.
+     * @throws ArithmeticException If the square root is infinite.
      * @throws IllegalArgumentException If a radicand is negative.
      */
     protected static double square(double radicand, double... indicies)
@@ -204,8 +204,8 @@ final class Operation {
      * Calculates a double from two numbers accordingly.
      * 
      * @param operator The operation to be used.
-     * @param num1     The first number.
-     * @param num2     The second number.
+     * @param num1 The first number.
+     * @param num2 The second number.
      * @return The result.
      * @throws IllegalArgumentException If the operator does not exist or is
      *                                  illegal.
