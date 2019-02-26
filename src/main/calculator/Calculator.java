@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @version 1
  * @since 2019-02-9
  */
-public class Calculator extends Manager {
+public class Calculator {
     private Manager manager;
 
     /**
