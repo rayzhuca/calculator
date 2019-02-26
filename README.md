@@ -34,17 +34,20 @@ java.lang.IllegalArgumentException: Blocked operator
 ### Check validity before calculating
 ```java
 public static void main(String[] args) {
-  Calculator calculator = new Calculator();
-  Scanner scanner = new Scanner(System.in);
   Manager manager = new Manager();
-  
-  manager.removeOperation(Operator.ADD);   
+  manager.removeOperation(Operator.ADD);
+  Calculator calculator = new Calculator(manager);
+
+  System.out.println(calculator.checkValidity("2+2"));
+
+  manager.addOperation(Operator.ADD);
   System.out.println(calculator.checkValidity("2+2"));
 }
 ```
 Output:
 ```
 false
+true
 ```
 
 ## Bugs
