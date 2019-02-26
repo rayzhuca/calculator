@@ -120,6 +120,7 @@ final class Separator {
      * 
      * @param string The string to be separated into an arraylist.
      * @return An arraylist of number and others in order.
+     * @throws IllegalArgumentException If the string is invalid for calculation.
      */
     protected static ArrayList<String> separateParts(String string) throws IllegalArgumentException {
         ArrayList<String> list = new ArrayList<String>();
@@ -205,6 +206,7 @@ final class Separator {
      * @param list The array to be evaluated.
      * @param manager The manager instance to be used for checking validity.
      * @return If array is valid, true if yes.
+     * @throws IllegalArgumentException If the array is invalid.
      */
     protected static boolean checkArray(String[] array, Manager manager) throws IllegalArgumentException {
         int openParentheses = 0;

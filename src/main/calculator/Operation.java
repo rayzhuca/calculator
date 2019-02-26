@@ -11,11 +11,11 @@ package main.calculator;
 final class Operation {
 
     /**
-     * Adds doubles together
+     * Adds doubles together.
      * 
-     * @param addends... Numbers to be added
-     * @return The sum of addends[]
-     * @throws IllegalArgumentException if sum is infinite
+     * @param addends... Numbers to be added.
+     * @return The sum of addends.
+     * @throws IllegalArgumentException If sum is infinite.
      */
     protected static double add(double... addends) throws IllegalArgumentException {
         if (0 == addends.length || null == addends) {
@@ -35,11 +35,11 @@ final class Operation {
     }
 
     /**
-     * Subtracts doubles together
+     * Subtracts doubles together.
      * 
-     * @param subtrahend... Numbers to be subtracted
-     * @return The difference of subtrahend[]
-     * @throws IllegalArgumentException if difference is infinite
+     * @param subtrahend... Numbers to be subtracted.
+     * @return The difference of subtrahend.
+     * @throws IllegalArgumentException If difference is infinite.
      */
     protected static double subtract(double... subtrahend) throws IllegalArgumentException {
         if (0 == subtrahend.length || null == subtrahend) {
@@ -59,11 +59,11 @@ final class Operation {
     }
 
     /**
-     * Multiplies doubles together
+     * Multiplies doubles together.
      * 
-     * @param multiplier... Numbers to be multiplied
-     * @return The product of multiplier[]
-     * @throws ArithmeticException if product is infinite
+     * @param multiplier... Numbers to be multiplied.
+     * @return The product of multiplier.
+     * @throws ArithmeticException If product is infinite.
      */
     protected static double multiply(double... multiplier) throws IllegalArgumentException {
         if (0 == multiplier.length || null == multiplier) {
@@ -83,12 +83,12 @@ final class Operation {
     }
 
     /**
-     * Divides doubles together
+     * Divides doubles together.
      * 
-     * @param divisor... Numbers to be divided
-     * @return The quotient of divisor[]
-     * @throws ArithmeticException      if dividend is divided by 0
-     * @throws IllegalArgumentException if quotient is infinite
+     * @param divisor... Numbers to be divided.
+     * @return The quotient of divisor[].
+     * @throws ArithmeticException      If dividend is divided by 0.
+     * @throws IllegalArgumentException If quotient is infinite.
      */
     protected static double divide(double... divisor) throws IllegalArgumentException, ArithmeticException {
         if (divisor.length == 0 || divisor == null) {
@@ -116,12 +116,12 @@ final class Operation {
     }
 
     /**
-     * Exponentiates of doubles together
+     * Exponentiates of doubles together.
      * 
-     * @param base         The base of the power
-     * @param exponents... Numbers to be exponentiated
-     * @return The power of exponents[]
-     * @throws ArithmeticException if the power is infinite
+     * @param base         The base of the power.
+     * @param exponents... Numbers to be exponentiated.
+     * @return The power of exponents.
+     * @throws ArithmeticException If the power is infinite.
      */
     protected static double power(double base, double... exponents) throws IllegalArgumentException {
         if (exponents.length == 0 || exponents == null) {
@@ -147,13 +147,13 @@ final class Operation {
     }
 
     /**
-     * Square roots a single number
+     * Square roots a single number.
      * 
-     * @param radicand    The radicand of a square root, must be positive
-     * @param indicies... The indicies of a square root
-     * @return The square root of the radicand to the indicies
-     * @throws ArithmeticException      if the square root is infinite
-     * @throws IllegalArgumentException if a radicand is negative
+     * @param radicand    The radicand of a square root, must be positive.
+     * @param indicies... The indicies of a square root.
+     * @return The square root of the radicand to the indicies.
+     * @throws ArithmeticException      If the square root is infinite.
+     * @throws IllegalArgumentException If a radicand is negative.
      */
     protected static double square(double radicand, double... indicies)
             throws IllegalArgumentException, IllegalArgumentException {
@@ -177,11 +177,11 @@ final class Operation {
     }
 
     /**
-     * Calculates the factorial
+     * Calculates the factorial.
      * 
-     * @param factorial The factorial to be calculated
-     * @return The product of a factorial
-     * @throws ArithmeticException if product is infinite
+     * @param factorial The factorial to be calculated.
+     * @return The product of a factorial.
+     * @throws ArithmeticException If product is infinite.
      */
     protected static double factorial(double factorial) throws IllegalArgumentException {
         if (factorial == 0) {
@@ -201,12 +201,14 @@ final class Operation {
     }
 
     /**
-     * Calculates a double from two numbers accordingly
+     * Calculates a double from two numbers accordingly.
      * 
-     * @param operator the operation to be used
-     * @param num1     the first number
-     * @param num2     the second number
-     * @return the result
+     * @param operator The operation to be used.
+     * @param num1     The first number.
+     * @param num2     The second number.
+     * @return The result.
+     * @throws IllegalArgumentException If the operator does not exist or is
+     *                                  illegal.
      */
     protected static double operate(Operator operator, double num1, double num2) throws IllegalArgumentException {
         if (operator == Operator.ADD) {
